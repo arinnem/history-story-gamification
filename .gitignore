@@ -1,0 +1,22 @@
+# Agent skills (symlinked from shared workspace)
+.agent/
+.agents/
+
+# GSD project management
+.gsd/
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+*.tmp
+*.log

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Con Đường Điện Biên — Hành trình gamification kể lại câu chuyện Chiến thắng Điện Biên Phủ 1954. Dựa trên tác phẩm 'Kể chuyện Điện Biên Phủ' (NXB Kim Đồng).">
+  <meta name="keywords" content="Điện Biên Phủ, lịch sử Việt Nam, gamification, kể chuyện, AI, sách">
+  <title>Con Đường Điện Biên — Hành Trình Lịch Sử</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Philosopher:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/gate.css">
+  <link rel="stylesheet" href="styles/puzzle.css">
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="app-title">
+          <span class="title-icon">⭐</span>
+          Con Đường Điện Biên
+        </h1>
+        <p class="app-subtitle">Hành Trình Lịch Sử 1954</p>
+      </div>
+      <div class="header-right">
+        <button class="btn-gallery" id="btn-gallery" title="Bộ sưu tập">
+          <span class="gallery-icon">🃏</span>
+          <span class="gallery-label">Bộ Sưu Tập</span>
+          <span class="gallery-count" id="gallery-count">0/6</span>
+        </button>
+        <button class="btn-badges" id="btn-badges" title="Huy hiệu">
+          <span class="badges-icon">🏅</span>
+          <span class="badges-label">Huy Hiệu</span>
+          <span class="badges-count" id="badges-count">0/5</span>
+        </button>
+      </div>
+    </div>
+    <!-- Progress bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN: MAP VIEW ===== -->
+  <main class="map-container" id="map-container">
+    <div class="map-bg">
+      <!-- Decorative mountain/terrain elements -->
+      <div class="terrain terrain-mountains"></div>
+      <div class="terrain terrain-valley"></div>
+      <div class="terrain terrain-river"></div>
+
+      <!-- Trail connecting gates -->
+      <svg class="trail-path" id="trail-path" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+        <path class="trail-line" d="M 150,120 C 250,180 300,280 380,320 S 500,350 550,380 S 650,430 700,460 S 800,520 850,560" />
+      </svg>
+
+      <!-- 5 Gate Markers -->
+      <div class="gate-marker gate-1" id="gate-marker-1" data-gate="1">
+        <div class="gate-pulse"></div>
+        <div class="gate-icon">
+          <span class="gate-number">I</span>
+        </div>
+        <div class="gate-label">
+          <span class="gate-name">Lời Kêu Gọi</span>
+          <span class="gate-status-text">Bắt đầu</span>
+        </div>
+      </div>
+
+      <div class="gate-marker gate-2 locked" id="gate-marker-2" data-gate="2">
+        <div class="gate-pulse"></div>
+        <div class="gate-icon">
+          <span class="gate-number">II</span>
+        </div>
+        <div class="gate-label">
+          <span class="gate-name">Cuộc Hành Quân</span>
+          <span class="gate-status-text">🔒</span>
+        </div>
+      </div>
+
+      <div class="gate-marker gate-3 locked" id="gate-marker-3" data-gate="3">
+        <div class="gate-pulse"></div>
+        <div class="gate-icon">
+          <span class="gate-number">III</span>
+        </div>
+        <div class="gate-label">
+          <span class="gate-name">Đào Chiến Hào</span>
+          <span class="gate-status-text">🔒</span>
+        </div>
+      </div>
+
+      <div class="gate-marker gate-4 locked" id="gate-marker-4" data-gate="4">
+        <div class="gate-pulse"></div>
+        <div class="gate-icon">
+          <span class="gate-number">IV</span>
+        </div>
+        <div class="gate-label">
+          <span class="gate-name">56 Ngày Đêm</span>
+          <span class="gate-status-text">🔒</span>
+        </div>
+      </div>
+
+      <div class="gate-marker gate-5 locked" id="gate-marker-5" data-gate="5">
+        <div class="gate-pulse"></div>
+        <div class="gate-icon">
+          <span class="gate-number">V</span>
+        </div>
+        <div class="gate-label">
+          <span class="gate-name">Chiến Thắng</span>
+          <span class="gate-status-text">🔒</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map legend -->
+    <div class="map-legend">
+      <div class="legend-item">
+        <span class="legend-dot active"></span> Đang mở
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot locked"></span> Chưa mở khóa
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot completed"></span> Hoàn thành
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== GATE VIEW (hidden, shown when a gate is entered) ===== -->
+  <div class="gate-view" id="gate-view" style="display: none;">
+    <!-- Populated dynamically by gate-renderer.js -->
+  </div>
+
+  <!-- ===== GALLERY MODAL ===== -->
+  <div class="modal-overlay" id="gallery-modal" style="display: none;">
+    <div class="modal-content gallery-content">
+      <button class="modal-close" id="gallery-close">&times;</button>
+      <h2 class="modal-title">🃏 Bộ Sưu Tập Nhân Vật</h2>
+      <div class="card-gallery" id="card-gallery">
+        <!-- Populated by gallery.js -->
+      </div>
+      <h2 class="modal-title badges-title">🏅 Huy Hiệu</h2>
+      <div class="badge-gallery" id="badge-gallery">
+        <!-- Populated by gallery.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COMPLETION SCREEN ===== -->
+  <div class="completion-screen" id="completion-screen" style="display: none;">
+    <!-- Populated after Gate 5 -->
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="app-footer">
+    <p>Dựa trên tác phẩm <em>"Kể chuyện Điện Biên Phủ"</em> — NXB Kim Đồng</p>
+    <p class="footer-contest">Cuộc thi "Cùng AI kể chuyện" · Ngày Sách và Văn hóa đọc 2026</p>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="js/data.js"></script>
+  <script src="js/game-engine.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/gate-renderer.js"></script>
+  <script src="js/card-reveal.js"></script>
+  <script src="js/badge-reveal.js"></script>
+  <script>
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+      GameEngine.init();
+      MapView.init();
+      Gallery.init();
+
+      // Completion screen after all 5 gates
+      document.addEventListener('allGatesCompleted', showCompletionScreen);
+    });
+
+    function showCompletionScreen() {
+      const screen = document.getElementById('completion-screen');
+      if (!screen) return;
+
+      const progress = GameEngine.getProgress();
+
+      // Hide everything else
+      document.getElementById('map-container').style.display = 'none';
+      document.getElementById('gate-view').style.display = 'none';
+      document.querySelector('.app-footer').style.display = 'none';
+
+      screen.style.display = 'flex';
+      screen.style.flexDirection = 'column';
+      screen.style.alignItems = 'center';
+      screen.style.justifyContent = 'center';
+      screen.style.minHeight = 'calc(100vh - 80px)';
+      screen.style.padding = '2rem';
+      screen.style.textAlign = 'center';
+      screen.style.background = 'linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 50%, var(--parchment-dark) 100%)';
+      screen.style.animation = 'fadeIn 0.5s ease';
+
+      // Build all cards HTML
+      let cardsHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        const gate = GATES_DATA[i];
+        cardsHtml += `
+          <div style="text-align:center;">
+            <img src="${gate.character.image}" alt="${gate.character.name}" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--gold); object-fit:cover;">
+            <div style="font-size:0.7rem; font-weight:700; margin-top:4px; color:var(--earth-dark);">${gate.character.name}</div>
+          </div>
+        `;
+        if (i === 4 && gate.character2) {
+          cardsHtml += `
+            <div style="text-align:center;">
+              <img src="${gate.character2.image}" alt="${gate.character2.name}" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--gold); object-fit:cover;">
+              <div style="font-size:0.7rem; font-weight:700; margin-top:4px; color:var(--earth-dark);">${gate.character2.name}</div>
+            </div>
+          `;
+        }
+      }
+
+      // Build badges HTML
+      let badgesHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        const gate = GATES_DATA[i];
+        badgesHtml += `
+          <div style="text-align:center;">
+            <div style="font-size:2rem;">${gate.badge.icon}</div>
+            <div style="font-size:0.65rem; font-weight:700; color:var(--gold-dark);">${gate.badge.name}</div>
+          </div>
+        `;
+      }
+
+      screen.innerHTML = `
+        <div style="font-size:4rem; margin-bottom:1rem;">🎉🇻🇳🎉</div>
+        <h1 style="font-family:var(--font-display); color:var(--accent-red); font-size:clamp(1.8rem,5vw,2.8rem); margin-bottom:0.5rem;">
+          Hoàn Thành Xuất Sắc!
+        </h1>
+        <p style="font-family:var(--font-accent); color:var(--earth-medium); font-size:1.1rem; margin-bottom:2rem; max-width:600px;">
+          Bạn đã đi qua toàn bộ <strong>Con Đường Điện Biên</strong> — từ lời kêu gọi kháng chiến đến chiến thắng lịch sử "lừng lẫy năm châu, chấn động địa cầu."
+        </p>
+
+        <div style="display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
+            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.completedGates}/${progress.totalGates}</div>
+            <div style="font-size:0.8rem; color:var(--earth-medium);">Cổng hoàn thành</div>
+          </div>
+          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
+            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.totalCards}/${progress.maxCards}</div>
+            <div style="font-size:0.8rem; color:var(--earth-medium);">Thẻ nhân vật</div>
+          </div>
+          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
+            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.totalBadges}/${progress.maxBadges}</div>
+            <div style="font-size:0.8rem; color:var(--earth-medium);">Huy hiệu</div>
+          </div>
+        </div>
+
+        <h3 style="font-family:var(--font-display); color:var(--gold-dark); margin-bottom:1rem;">🃏 Bộ Sưu Tập Nhân Vật</h3>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+          ${cardsHtml}
+        </div>
+
+        <h3 style="font-family:var(--font-display); color:var(--gold-dark); margin-bottom:1rem;">🏅 Huy Hiệu</h3>
+        <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+          ${badgesHtml}
+        </div>
+
+        <div style="border-top:2px solid var(--khaki); padding-top:1.5rem; margin-top:1rem;">
+          <p style="font-family:var(--font-accent); font-style:italic; color:var(--earth-medium); max-width:500px; margin:0 auto 1.5rem;">
+            "Chiến thắng Điện Biên Phủ mãi mãi đi vào lịch sử dân tộc Việt Nam như một trong những chiến thắng vĩ đại nhất."
+          </p>
+          <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <button class="btn-primary" onclick="GameEngine.resetProgress(); location.reload();">🔄 Khám phá lại</button>
+            <button class="btn-secondary" onclick="Gallery.openGallery();">🃏 Xem bộ sưu tập</button>
+          </div>
+        </div>
+
+        <p style="margin-top:2rem; font-size:0.75rem; color:var(--khaki);">
+          Dựa trên tác phẩm "Kể chuyện Điện Biên Phủ" — NXB Kim Đồng<br>
+          Cuộc thi "Cùng AI kể chuyện" · Ngày Sách và Văn hóa đọc 2026
+        </p>
+      `;
+
+      // Trigger confetti
+      if (typeof BadgeReveal !== 'undefined') {
+        BadgeReveal.render(document.createElement('div'), { icon: '🏆', name: '', description: '' });
+      }
+    }
+  </script>
+</body>
+</html>

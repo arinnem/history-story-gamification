@@ -1,0 +1,220 @@
+/* ===================================================
+   Gate View Styles
+   =================================================== */
+
+.gate-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-gate);
+  background: var(--parchment);
+  overflow-y: auto;
+  animation: fadeIn var(--transition-medium);
+}
+
+.gate-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: linear-gradient(135deg, var(--earth-dark) 0%, var(--earth-medium) 100%);
+  color: var(--parchment-light);
+  box-shadow: var(--shadow-md);
+}
+
+.gate-header .gate-back-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: none;
+  border: 1px solid var(--glass-border);
+  color: var(--parchment-light);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.gate-header .gate-back-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--gold);
+}
+
+.gate-header .gate-title-bar {
+  text-align: center;
+}
+
+.gate-header .gate-title-bar h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--gold);
+}
+
+.gate-header .gate-title-bar .gate-subtitle {
+  font-size: 0.8rem;
+  color: var(--khaki-light);
+  font-family: var(--font-accent);
+}
+
+.gate-header .gate-progress-indicator {
+  font-size: 0.8rem;
+  color: var(--khaki-light);
+}
+
+/* Gate sections */
+.gate-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+/* Story section */
+.story-section {
+  padding-bottom: var(--space-3xl);
+}
+
+.story-section .story-paragraph {
+  margin-bottom: var(--space-lg);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-brown);
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.story-section .story-paragraph:nth-child(2) { animation-delay: 0.1s; }
+.story-section .story-paragraph:nth-child(3) { animation-delay: 0.2s; }
+.story-section .story-paragraph:nth-child(4) { animation-delay: 0.3s; }
+.story-section .story-paragraph:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.story-section .story-image {
+  width: 100%;
+  max-width: 600px;
+  margin: var(--space-xl) auto;
+  display: block;
+  border-radius: 12px;
+  border: 3px solid var(--khaki);
+  box-shadow: var(--shadow-md);
+}
+
+.story-section .story-image-caption {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--earth-medium);
+  font-style: italic;
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xl);
+}
+
+.story-section .story-continue {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-2xl);
+}
+
+/* Puzzle section */
+.puzzle-section {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-3xl);
+  border-top: 2px dashed var(--khaki);
+}
+
+.puzzle-section .puzzle-title {
+  text-align: center;
+  margin-bottom: var(--space-sm);
+  color: var(--accent-red);
+}
+
+.puzzle-section .puzzle-instructions {
+  text-align: center;
+  color: var(--earth-medium);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-xl);
+}
+
+.puzzle-section .puzzle-container {
+  min-height: 200px;
+}
+
+.puzzle-section .puzzle-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+/* Reward section */
+.reward-section {
+  padding-top: var(--space-2xl);
+  text-align: center;
+  border-top: 2px dashed var(--gold);
+  animation: fadeIn var(--transition-slow);
+}
+
+.reward-section .reward-title {
+  font-size: 1.5rem;
+  color: var(--gold-dark);
+  margin-bottom: var(--space-xl);
+}
+
+.reward-section .reward-card-area {
+  margin: var(--space-xl) 0;
+}
+
+.reward-section .reward-badge-area {
+  margin: var(--space-xl) 0;
+}
+
+.reward-section .reward-fact-area {
+  margin: var(--space-xl) 0;
+}
+
+.reward-section .reward-return {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--khaki);
+}
+
+/* Gate completed state */
+.gate-completed-overlay {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+.gate-completed-overlay .completed-checkmark {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+}
+
+.gate-completed-overlay .completed-message {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--victory-green);
+  margin-bottom: var(--space-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gate-header .gate-title-bar h2 {
+    font-size: 1rem;
+  }
+
+  .gate-section {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .story-section .story-paragraph {
+    font-size: 0.95rem;
+  }
+}

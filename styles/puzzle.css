@@ -1,0 +1,310 @@
+/* ===================================================
+   Puzzle Styles — Shared across all puzzle types
+   =================================================== */
+
+/* Decode puzzle */
+.decode-puzzle .word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.decode-puzzle .word-tile {
+  padding: var(--space-sm) var(--space-md);
+  background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-dark) 100%);
+  border: 2px solid var(--khaki);
+  border-radius: 8px;
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--earth-dark);
+  cursor: grab;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.decode-puzzle .word-tile:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.decode-puzzle .word-tile.placed {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.decode-puzzle .word-tile.correct {
+  border-color: var(--victory-green);
+  background: rgba(46, 125, 50, 0.1);
+}
+
+.decode-puzzle .answer-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  min-height: 50px;
+  padding: var(--space-md);
+  border: 2px dashed var(--khaki);
+  border-radius: 12px;
+  background: rgba(244, 232, 193, 0.3);
+}
+
+.decode-puzzle .answer-slot {
+  padding: var(--space-sm) var(--space-md);
+  min-width: 60px;
+  min-height: 40px;
+  border: 2px solid var(--earth-medium);
+  border-radius: 8px;
+  font-family: var(--font-accent);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  background: var(--parchment-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.decode-puzzle .answer-slot:empty {
+  border-style: dashed;
+  color: var(--locked-gray);
+}
+
+.decode-puzzle .answer-slot:hover {
+  border-color: var(--accent-red);
+}
+
+/* Matching puzzle */
+.matching-puzzle .match-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.matching-puzzle .match-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.matching-puzzle .match-item {
+  padding: var(--space-md);
+  background: var(--parchment-light);
+  border: 2px solid var(--khaki);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.matching-puzzle .match-item:hover {
+  border-color: var(--gold);
+  transform: translateX(4px);
+}
+
+.matching-puzzle .match-item.selected {
+  border-color: var(--accent-red);
+  background: rgba(198, 40, 40, 0.08);
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15);
+}
+
+.matching-puzzle .match-item.matched {
+  border-color: var(--victory-green);
+  background: rgba(46, 125, 50, 0.1);
+  cursor: default;
+  opacity: 0.8;
+}
+
+.matching-puzzle .match-item.wrong {
+  animation: shake 0.4s ease;
+  border-color: var(--accent-red);
+}
+
+/* Chronological puzzle */
+.chronological-puzzle .event-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.chronological-puzzle .event-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--parchment-light);
+  border: 2px solid var(--khaki);
+  border-radius: 10px;
+  cursor: grab;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.chronological-puzzle .event-card:hover {
+  border-color: var(--gold);
+}
+
+.chronological-puzzle .event-card.dragging {
+  opacity: 0.5;
+  border-color: var(--accent-red);
+}
+
+.chronological-puzzle .event-card.correct {
+  border-color: var(--victory-green);
+  background: rgba(46, 125, 50, 0.08);
+}
+
+.chronological-puzzle .event-card.incorrect {
+  border-color: var(--accent-red);
+  background: rgba(198, 40, 40, 0.06);
+}
+
+.chronological-puzzle .event-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: var(--olive);
+  color: var(--parchment-light);
+  flex-shrink: 0;
+}
+
+.chronological-puzzle .event-text {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.chronological-puzzle .event-year {
+  font-family: var(--font-accent);
+  font-weight: 700;
+  color: var(--gold-dark);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+}
+
+.chronological-puzzle .event-card.correct .event-year {
+  opacity: 1;
+}
+
+/* Jigsaw puzzle */
+.jigsaw-puzzle .jigsaw-grid {
+  display: grid;
+  gap: 3px;
+  max-width: 400px;
+  margin: 0 auto;
+  background: var(--earth-dark);
+  padding: 3px;
+  border-radius: 8px;
+}
+
+.jigsaw-puzzle .jigsaw-tile {
+  aspect-ratio: 1;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.jigsaw-puzzle .jigsaw-tile:hover {
+  border-color: var(--gold);
+  z-index: 2;
+}
+
+.jigsaw-puzzle .jigsaw-tile.selected {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 2px var(--accent-red);
+  z-index: 3;
+}
+
+.jigsaw-puzzle .jigsaw-tile.correct {
+  border-color: var(--victory-green);
+  box-shadow: inset 0 0 10px rgba(46, 125, 50, 0.3);
+}
+
+/* Shared puzzle states */
+.puzzle-feedback {
+  text-align: center;
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  border-radius: 10px;
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+  animation: fadeIn var(--transition-fast);
+}
+
+.puzzle-feedback.success {
+  background: rgba(46, 125, 50, 0.12);
+  color: var(--victory-green);
+  border: 2px solid var(--victory-green);
+}
+
+.puzzle-feedback.error {
+  background: rgba(198, 40, 40, 0.08);
+  color: var(--accent-red);
+  border: 2px solid var(--accent-red);
+}
+
+.puzzle-hint {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+.puzzle-hint .hint-btn {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--sky-blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.puzzle-hint .hint-text {
+  font-size: 0.85rem;
+  color: var(--earth-medium);
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+/* Shake animation for wrong answers */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .matching-puzzle .match-columns {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .decode-puzzle .word-tile {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .jigsaw-puzzle .jigsaw-grid {
+    max-width: 300px;
+  }
+}
