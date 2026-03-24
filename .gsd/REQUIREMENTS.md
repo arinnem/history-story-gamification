@@ -16,43 +16,43 @@ This file is the explicit capability and coverage contract for the project.
 
 ### R002 — Illustrated Narrative Storytelling
 - Class: primary-user-loop
-- Status: active
+- Status: advanced
 - Description: Each gate displays illustrated narrative text telling the Điện Biên Phủ story, sourced from "Kể chuyện Điện Biên Phủ" (NXB Kim Đồng).
 - Why it matters: This is the storytelling component the contest judges evaluate.
 - Source: user
 - Primary owning slice: M001/S02
-- Supporting slices: M001/S03
-- Validation: unmapped
+- Supporting slices: M001/S03, M002/S01, M002/S03
+- Validation: advanced — M002/S01 added geographic context via topographic map; M002/S03 added scroll-reveal, chapter headers, and pull-quote components for immersive reading
 
 ### R003 — Interactive Puzzle Challenges
 - Class: primary-user-loop
-- Status: active
+- Status: advanced
 - Description: Each gate contains an interactive puzzle (decode quotes, match artifacts, sort events, match heroes, piece together scenes). Puzzles serve as the "gate" mechanism.
 - Why it matters: Differentiates from passive storytelling — the gamification element.
 - Source: user
 - Primary owning slice: M001/S02
-- Supporting slices: M001/S03
-- Validation: unmapped
+- Supporting slices: M001/S03, M002/S03, M002/S04
+- Validation: advanced — M002/S03 added section dividers between story/puzzle; M002/S04 added screen shake on wrong, sparkle on correct, hover micro-animations on tiles
 
 ### R004 — Collectible Character Cards
 - Class: differentiator
-- Status: active
+- Status: advanced
 - Description: Completing a gate unlocks an illustrated character card (historical figure) with name, title, achievement, and historical quote. Card has a flip animation to reveal.
 - Why it matters: Collection motivation drives engagement and makes the contest entry memorable.
 - Source: user
 - Primary owning slice: M001/S02
-- Supporting slices: M001/S03
-- Validation: unmapped
+- Supporting slices: M001/S03, M002/S04
+- Validation: advanced — M002/S04 added sparkle particle trail on card flip reveal
 
 ### R005 — Badge System with Hidden Facts
 - Class: differentiator
-- Status: active
+- Status: advanced
 - Description: Completing a gate earns a themed badge and reveals a hidden historical fact not shown in the main narrative.
 - Why it matters: Reward loop + educational bonus content.
 - Source: user
 - Primary owning slice: M001/S02
-- Supporting slices: M001/S03
-- Validation: unmapped
+- Supporting slices: M001/S03, M002/S04
+- Validation: advanced — M002/S04 added expanding golden ring effect on badge reveal
 
 ### R006 — Progress Persistence
 - Class: launchability
@@ -76,13 +76,13 @@ This file is the explicit capability and coverage contract for the project.
 
 ### R008 — Responsive Design
 - Class: quality-attribute
-- Status: active
+- Status: advanced
 - Description: App works on both desktop and mobile viewports.
 - Why it matters: Judges may view on phones.
 - Source: inferred
 - Primary owning slice: M001/S04
-- Supporting slices: none
-- Validation: unmapped
+- Supporting slices: M002/S01
+- Validation: advanced — M002/S01 SVG map responsive with mobile breakpoints; intro uses clamp() for responsive text
 
 ### R009 — AI Usage Documentation
 - Class: constraint
@@ -112,5 +112,7 @@ This file is the explicit capability and coverage contract for the project.
 
 - Active requirements: 9
 - Mapped to slices: 9
-- Validated: 0
+- Advanced by M002: 5 (R002, R003, R004, R005, R008)
+- Validated: 0 (pending manual UAT)
 - Unmapped active requirements: 0
+
