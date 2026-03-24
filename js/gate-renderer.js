@@ -6,6 +6,9 @@
 const GateRenderer = (() => {
 
   let currentGateId = null;
+  let scrollObserver = null;
+  let parallaxHandler = null;
+  let progressHandler = null;
 
   function render(gateId) {
     currentGateId = gateId;
@@ -13,9 +16,13 @@ const GateRenderer = (() => {
     const gateView = document.getElementById('gate-view');
     if (!gate || !gateView) return;
 
+    // Cleanup previous observers
+    cleanup();
+
     const isCompleted = GameEngine.isGateCompleted(gateId);
 
     gateView.innerHTML = `
+      <div class="reading-progress" id="reading-progress"></div>
       <div class="gate-header">
         <button class="gate-back-btn" id="gate-back-btn">← Về bản đồ</button>
         <div class="gate-title-bar">
@@ -29,30 +36,83 @@ const GateRenderer = (() => {
     `;
 
     // Bind back button
-    document.getElementById('gate-back-btn').addEventListener('click', () => MapView.closeGate());
+    document.getElementById('gate-back-btn').addEventListener('click', () => {
+      cleanup();
+      MapView.closeGate();
+    });
+
+    // Activate scroll-based features and bind buttons after DOM render
+    setTimeout(() => {
+      initScrollReveal();
+      initParallax();
+      initReadingProgress();
+
+      // Bind continue → puzzle button
+      const btnContinue = document.getElementById('btn-continue-puzzle');
+      if (btnContinue) {
+        btnContinue.addEventListener('click', () => showPuzzle(gate));
+      }
+    }, 100);
   }
 
   function renderFullGate(gate) {
+    const romanNumerals = ['I', 'II', 'III', 'IV', 'V'];
+    const numeral = romanNumerals[gate.id - 1] || gate.id;
+
+    // Build story content with interleaved images and quotes
+    let storyHtml = '';
+    gate.narrative.paragraphs.forEach((p, i) => {
+      storyHtml += `<p class="story-paragraph scroll-reveal">${p}</p>`;
+
+      // Insert pull-quote if available
+      if (gate.narrative.quotes && gate.narrative.quotes[i]) {
+        const q = gate.narrative.quotes[i];
+        storyHtml += `
+          <div class="pull-quote scroll-reveal">
+            <div class="pull-quote-text">${q.text}</div>
+            ${q.attribution ? `<div class="pull-quote-attribution">${q.attribution}</div>` : ''}
+          </div>
+        `;
+      }
+
+      // Insert image if available
+      if (gate.narrative.images && gate.narrative.images[i]) {
+        storyHtml += `
+          <div class="story-image-wrapper scroll-reveal parallax-image">
+            <img class="story-image" src="${gate.narrative.images[i]}" alt="Minh h\u1ecda" loading="lazy">
+          </div>
+        `;
+      }
+    });
+
     return `
+      <!-- CHAPTER HEADER -->
+      <div class="chapter-header scroll-reveal">
+        <div class="chapter-numeral">${numeral}</div>
+        <div class="chapter-title">${gate.title}</div>
+        <div class="chapter-subtitle">${gate.subtitle}</div>
+        <hr class="chapter-border">
+      </div>
+
       <!-- STORY SECTION -->
       <div class="gate-section story-section" id="story-section">
-        ${gate.narrative.paragraphs.map((p, i) => `
-          <p class="story-paragraph" style="animation-delay: ${i * 0.15}s">${p}</p>
-          ${gate.narrative.images[i] ? `
-            <img class="story-image" src="${gate.narrative.images[i]}" alt="Minh họa">
-          ` : ''}
-        `).join('')}
+        ${storyHtml}
 
-        <div class="story-continue">
+        <div class="section-divider divider-star scroll-reveal">
+          <span class="divider-icon"></span>
+        </div>
+
+        <div class="story-continue scroll-reveal">
           <button class="btn-primary" id="btn-continue-puzzle">
-            🧩 Tiếp tục — Thử thách
+            \ud83e\udde9 Ti\u1ebfp t\u1ee5c \u2014 Th\u1eed th\u00e1ch
           </button>
         </div>
       </div>
 
       <!-- PUZZLE SECTION (hidden until Continue clicked) -->
       <div class="gate-section puzzle-section" id="puzzle-section" style="display: none;">
-        <h3 class="puzzle-title">🧩 Thử Thách</h3>
+        <div class="section-divider divider-floral"><span class="divider-icon"></span></div>
+        <h3 class="puzzle-title">\ud83e\udde9 Th\u1eed Th\u00e1ch</h3>
         <p class="puzzle-instructions">${gate.puzzle.config.instruction}</p>
         <div class="puzzle-container" id="puzzle-container"></div>
         <div class="puzzle-actions" id="puzzle-actions"></div>
@@ -60,26 +120,20 @@ const GateRenderer = (() => {
 
       <!-- REWARD SECTION (hidden until puzzle solved) -->
       <div class="gate-section reward-section" id="reward-section" style="display: none;">
-        <h3 class="reward-title">🎉 Chúc mừng!</h3>
+        <div class="section-divider divider-rule"><span class="divider-icon"></span></div>
+        <h3 class="reward-title">\ud83c\udf89 Ch\u00fac m\u1eebng!</h3>
         <div class="reward-card-area" id="reward-card-area"></div>
         <div class="reward-badge-area" id="reward-badge-area"></div>
         <div class="reward-fact-area" id="reward-fact-area"></div>
         <div class="reward-return">
           <button class="btn-primary" id="btn-return-map">
-            🗺️ Quay về bản đồ
+            \ud83d\uddfa\ufe0f Quay v\u1ec1 b\u1ea3n \u0111\u1ed3
           </button>
         </div>
       </div>
     `;
-
-    // Bind continue button (after DOM render in next tick)
-    setTimeout(() => {
-      const btnContinue = document.getElementById('btn-continue-puzzle');
-      if (btnContinue) {
-        btnContinue.addEventListener('click', () => showPuzzle(gate));
-      }
-    }, 50);
   }
+
 
   function showPuzzle(gate) {
     const puzzleSection = document.getElementById('puzzle-section');
@@ -488,4 +542,83 @@ const GateRenderer = (() => {
   return {
     render
   };
+
+  // ========================
+  //  Scroll Reveal Observer
+  // ========================
+  function initScrollReveal() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('revealed'));
+      return;
+    }
+
+    scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          scrollObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+  }
+
+  // ========================
+  //  Parallax Images
+  // ========================
+  function initParallax() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    parallaxHandler = () => {
+      document.querySelectorAll('.parallax-image .story-image').forEach(img => {
+        const rect = img.getBoundingClientRect();
+        const windowH = window.innerHeight;
+        if (rect.top < windowH && rect.bottom > 0) {
+          const progress = (rect.top + rect.height / 2) / windowH;
+          const offset = (progress - 0.5) * 30; // max ±15px
+          img.style.transform = `translateY(${offset}px)`;
+        }
+      });
+    };
+    window.addEventListener('scroll', parallaxHandler, { passive: true });
+  }
+
+  // ========================
+  //  Reading Progress Bar
+  // ========================
+  function initReadingProgress() {
+    const bar = document.getElementById('reading-progress');
+    const storySection = document.getElementById('story-section');
+    if (!bar || !storySection) return;
+
+    progressHandler = () => {
+      const rect = storySection.getBoundingClientRect();
+      const total = storySection.scrollHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const pct = Math.min(100, (scrolled / total) * 100);
+      bar.style.width = pct + '%';
+
+      // Hide when past story section
+      if (rect.bottom < 0) {
+        bar.classList.add('hidden');
+      } else {
+        bar.classList.remove('hidden');
+      }
+    };
+    window.addEventListener('scroll', progressHandler, { passive: true });
+  }
+
+  // ========================
+  //  Cleanup
+  // ========================
+  function cleanup() {
+    if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
+    if (parallaxHandler) { window.removeEventListener('scroll', parallaxHandler); parallaxHandler = null; }
+    if (progressHandler) { window.removeEventListener('scroll', progressHandler); progressHandler = null; }
+    const bar = document.getElementById('reading-progress');
+    if (bar) bar.style.width = '0%';
+  }
 })();

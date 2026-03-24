@@ -50,12 +50,12 @@ Transform "Con Đường Điện Biên" from a functional prototype into a conte
 **Demo:** Entering a gate shows a chapter title with decorative headers. Text paragraphs fade-in-up on scroll. Images have subtle parallax. Historical quotes appear in ornate pull-quote boxes. Section dividers use Vietnamese decorative patterns.
 
 **Tasks:**
-- [ ] T01: Add IntersectionObserver for scroll-based text reveal (fade-in-up on enter viewport)
-- [ ] T02: Style images with parallax scroll effect (background-attachment: fixed or transform-based)
-- [ ] T03: Create decorative chapter headers with gate number, Vietnamese ornamental border
-- [ ] T04: Build pull-quote component for historical quotes (large text, decorative marks, accent color)
-- [ ] T05: Add ornamental section dividers between story, puzzle, and reward sections
-- [ ] T06: Add a reading progress indicator in the gate header
+- [x] T01: Add IntersectionObserver for scroll-based text reveal (fade-in-up on enter viewport)
+- [x] T02: Style images with parallax scroll effect (background-attachment: fixed or transform-based)
+- [x] T03: Create decorative chapter headers with gate number, Vietnamese ornamental border
+- [x] T04: Build pull-quote component for historical quotes (large text, decorative marks, accent color)
+- [x] T05: Add ornamental section dividers between story, puzzle, and reward sections
+- [x] T06: Add a reading progress indicator in the gate header
 
 **Files:** `styles/gate.css`, `js/gate-renderer.js`, `styles/components.css` (new)
 
