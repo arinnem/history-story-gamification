@@ -14,8 +14,20 @@
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/gate.css">
   <link rel="stylesheet" href="styles/puzzle.css">
+  <link rel="stylesheet" href="styles/intro.css">
 </head>
 <body>
+  <!-- ===== CINEMATIC INTRO ===== -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div class="intro-paper"></div>
+    <div class="intro-lines"></div>
+    <div class="intro-year" id="intro-year">1954</div>
+    <h1 class="intro-title">Con Đường Điện Biên</h1>
+    <p class="intro-subtitle">Hành trình lịch sử qua trận Điện Biên Phủ</p>
+    <p class="intro-source">Dựa trên "Kể chuyện Điện Biên Phủ" — NXB Kim Đồng</p>
+    <button class="intro-skip-btn" id="intro-skip-btn">Bỏ qua ▶</button>
+  </div>
+
   <!-- ===== HEADER ===== -->
   <header class="app-header">
     <div class="header-content">
@@ -263,12 +275,14 @@
   <script src="js/gate-renderer.js"></script>
   <script src="js/card-reveal.js"></script>
   <script src="js/badge-reveal.js"></script>
+  <script src="js/intro.js"></script>
   <script>
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
       GameEngine.init();
       MapView.init();
       Gallery.init();
+      IntroController.init();
 
       // Completion screen after all 5 gates
       document.addEventListener('allGatesCompleted', showCompletionScreen);

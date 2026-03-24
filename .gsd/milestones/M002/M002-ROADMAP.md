@@ -32,12 +32,12 @@ Transform "Con Đường Điện Biên" from a functional prototype into a conte
 **Demo:** App opens with a 5s cinematic: dark screen → vintage paper unfurling → "1954" typewriter animation → "Con Đường Điện Biên" title reveal → fade into map. Gate transitions use a page-turn/book-open effect.
 
 **Tasks:**
-- [ ] T01: Build intro overlay with cinematic sequence (CSS animations, no dependencies)
-- [ ] T02: Add typewriter text animation for the year "1954" and subtitle
-- [ ] T03: Implement page-turn transition for map → gate view
-- [ ] T04: Add fade-in transition for gate view → map return
-- [ ] T05: Add "Skip Intro" button for returning users
-- [ ] T06: Store intro-seen flag in localStorage to auto-skip on repeat visits
+- [x] T01: Build intro overlay with cinematic sequence (CSS animations, no dependencies)
+- [x] T02: Add typewriter text animation for the year "1954" and subtitle
+- [x] T03: Implement page-turn transition for map → gate view
+- [x] T04: Add fade-in transition for gate view → map return
+- [x] T05: Add "Skip Intro" button for returning users
+- [x] T06: Store intro-seen flag in localStorage to auto-skip on repeat visits
 
 **Files:** `index.html`, `styles/intro.css` (new), `js/intro.js` (new)
 
