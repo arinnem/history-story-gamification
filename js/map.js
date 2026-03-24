@@ -1,5 +1,5 @@
 /* ===================================================
-   Map View — Navigation and gate marker management
+   Map View — SVG-based navigation and gate marker management
    =================================================== */
 
 const MapView = (() => {
@@ -7,42 +7,37 @@ const MapView = (() => {
   function init() {
     updateMarkers();
     bindEvents();
-    console.log('[MapView] Initialized.');
+    console.log('[MapView] Initialized with SVG map overlay.');
   }
 
-  // Update all gate markers to reflect current game state
+  // Update all SVG gate markers to reflect current game state
   function updateMarkers() {
     for (let i = 1; i <= GameEngine.TOTAL_GATES; i++) {
-      const marker = document.getElementById(`gate-marker-${i}`);
+      const marker = document.getElementById(`gate-svg-${i}`);
       if (!marker) continue;
-
-      const statusText = marker.querySelector('.gate-status-text');
 
       // Reset classes
       marker.classList.remove('locked', 'completed');
 
       if (GameEngine.isGateCompleted(i)) {
         marker.classList.add('completed');
-        if (statusText) statusText.textContent = '✅ Hoàn thành';
       } else if (GameEngine.isGateUnlocked(i)) {
-        // Active/unlocked
-        if (statusText) statusText.textContent = '⭐ Đang mở';
+        // Active/unlocked — default styling, no extra class needed
       } else {
         marker.classList.add('locked');
-        if (statusText) statusText.textContent = '🔒';
       }
     }
   }
 
-  // Bind click events to gate markers
+  // Bind click events to SVG gate markers
   function bindEvents() {
     for (let i = 1; i <= GameEngine.TOTAL_GATES; i++) {
-      const marker = document.getElementById(`gate-marker-${i}`);
+      const marker = document.getElementById(`gate-svg-${i}`);
       if (!marker) continue;
 
       marker.addEventListener('click', () => {
         if (marker.classList.contains('locked')) {
-          // Shake the locked marker
+          // Shake animation on locked marker
           marker.style.animation = 'shake 0.4s ease';
           setTimeout(() => marker.style.animation = '', 400);
           return;

@@ -230,212 +230,310 @@ p {
 .map-container {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, var(--parchment-dark) 0%, var(--earth-dark) 100%);
+}
+
+.map-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 3/2;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 4px var(--earth-medium),
+    0 0 0 8px rgba(92, 61, 46, 0.3),
+    var(--shadow-lg),
+    0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Aged paper edge effect */
+.map-border-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 40px rgba(44, 24, 16, 0.25),
+    inset 0 0 100px rgba(44, 24, 16, 0.1);
 }
 
 .map-bg {
   position: relative;
   width: 100%;
-  max-width: 1000px;
-  height: 700px;
-  border-radius: 16px;
-  border: 3px solid var(--earth-medium);
-  box-shadow: var(--shadow-lg), inset 0 0 60px rgba(44, 24, 16, 0.1);
+  height: 100%;
   overflow: hidden;
-
-  /* Map background — topographic feel */
-  background:
-    repeating-conic-gradient(rgba(74, 93, 35, 0.03) 0% 25%, transparent 0% 50%) 0 0 / 30px 30px,
-    radial-gradient(ellipse at 60% 40%, rgba(74, 93, 35, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 30% 70%, rgba(92, 61, 46, 0.1) 0%, transparent 50%),
-    linear-gradient(160deg, #e8dcc0 0%, #d4c9a8 40%, #c4b896 70%, #b8a88a 100%);
 }
 
-/* Terrain decorations */
-.terrain {
-  position: absolute;
-  pointer-events: none;
-}
-
-.terrain-mountains {
-  top: 5%;
-  left: 10%;
-  width: 80%;
-  height: 30%;
-  background:
-    radial-gradient(ellipse at 30% 80%, rgba(46, 59, 22, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 70%, rgba(46, 59, 22, 0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at 80% 85%, rgba(46, 59, 22, 0.1) 0%, transparent 40%);
-}
-
-.terrain-valley {
-  top: 35%;
-  left: 30%;
-  width: 40%;
-  height: 30%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(196, 184, 150, 0.4) 0%, transparent 70%);
-}
-
-.terrain-river {
-  top: 20%;
-  left: 25%;
-  width: 50%;
-  height: 60%;
-  background:
-    conic-gradient(from 120deg at 50% 50%, rgba(21, 101, 192, 0.08) 0deg, transparent 30deg, transparent 150deg, rgba(21, 101, 192, 0.06) 180deg, transparent 210deg);
-}
-
-/* Trail path */
-.trail-path {
+/* Base topographic map image */
+.map-base-image {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  user-select: none;
   pointer-events: none;
-  z-index: 1;
+  /* Aged vintage filter */
+  filter: sepia(0.15) contrast(1.05) brightness(0.95);
+}
+
+/* SVG Overlay — covers entire map */
+.map-svg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+/* ===== GEOGRAPHIC LABELS ===== */
+.label-river {
+  font-family: var(--font-accent);
+  font-size: 16px;
+  font-style: italic;
+  fill: #1565c0;
+  opacity: 0.7;
+  letter-spacing: 0.15em;
+}
+
+.label-valley {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--earth-medium);
+  opacity: 0.5;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.label-strongpoint {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-style: italic;
+  fill: var(--accent-red);
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+
+.label-viet-place {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--earth-dark);
+  opacity: 0.65;
+}
+
+.airstrip-line {
+  stroke: var(--earth-medium);
+  stroke-width: 2;
+  stroke-dasharray: 8 6;
+  opacity: 0.4;
+}
+
+.label-airstrip {
+  font-family: var(--font-body);
+  font-size: 9px;
+  fill: var(--earth-medium);
+  opacity: 0.5;
+  letter-spacing: 0.1em;
+}
+
+/* ===== TRAIL PATH ===== */
+.trail-shadow {
+  fill: none;
+  stroke: rgba(44, 24, 16, 0.15);
+  stroke-width: 6;
+  stroke-linecap: round;
 }
 
 .trail-line {
   fill: none;
-  stroke: var(--earth-medium);
+  stroke: var(--gold-dark);
   stroke-width: 3;
   stroke-dasharray: 12 8;
   stroke-linecap: round;
-  opacity: 0.6;
+  opacity: 0.8;
+  animation: trailMarch 1.5s linear infinite;
 }
 
-/* ----- Gate Markers ----- */
-.gate-marker {
-  position: absolute;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@keyframes trailMarch {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -20; }
+}
+
+.trail-dot {
+  fill: var(--gold);
+  filter: drop-shadow(0 0 4px rgba(249, 168, 37, 0.8));
+}
+
+/* ===== GATE MARKERS (SVG) ===== */
+.gate-marker-svg {
   cursor: pointer;
-  transition: transform var(--transition-fast);
+  transition: transform 0.2s ease;
 }
 
-.gate-marker:hover:not(.locked) {
-  transform: scale(1.1);
+.gate-marker-svg:hover {
+  transform: scale(1.12);
 }
 
-.gate-marker.locked {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Gate positions on the map */
-.gate-1 { top: 12%; left: 12%; }
-.gate-2 { top: 30%; left: 32%; }
-.gate-3 { top: 45%; left: 50%; }
-.gate-4 { top: 60%; left: 65%; }
-.gate-5 { top: 78%; left: 82%; }
-
-/* Gate icon circle */
-.gate-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.2rem;
-  color: var(--parchment-light);
-  background: linear-gradient(135deg, var(--accent-red) 0%, var(--earth-dark) 100%);
-  border: 3px solid var(--gold);
-  box-shadow: var(--shadow-md), 0 0 0 3px rgba(249, 168, 37, 0.2);
-  transition: all var(--transition-medium);
-  position: relative;
-  z-index: 2;
-}
-
-.gate-marker.locked .gate-icon {
-  background: linear-gradient(135deg, var(--locked-gray) 0%, var(--locked-bg) 100%);
-  border-color: var(--locked-gray);
-  box-shadow: var(--shadow-sm);
-}
-
-.gate-marker.completed .gate-icon {
-  background: linear-gradient(135deg, var(--victory-green) 0%, var(--olive-dark) 100%);
-  border-color: var(--gold);
-  box-shadow: var(--shadow-md), var(--shadow-glow);
-}
-
-/* Pulse animation for active gate */
-.gate-pulse {
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
+/* Marker pulse ring */
+.marker-pulse {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
   opacity: 0;
-  z-index: 1;
+  animation: markerPulse 2s ease-out infinite;
+}
+
+@keyframes markerPulse {
+  0%   { r: 18; opacity: 0.6; }
+  100% { r: 35; opacity: 0; }
+}
+
+/* Marker glow circle */
+.marker-glow {
+  opacity: 0.5;
   pointer-events: none;
 }
 
-.gate-marker:not(.locked):not(.completed) .gate-pulse {
-  animation: gatePulse 2s ease-out infinite;
+/* Main marker circle */
+.marker-bg {
+  fill: var(--accent-red);
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
-@keyframes gatePulse {
-  0%   { transform: scale(1);   opacity: 0.6; }
-  100% { transform: scale(1.8); opacity: 0; }
-}
-
-/* Gate label */
-.gate-label {
-  margin-top: var(--space-xs);
-  text-align: center;
+/* Marker number text */
+.marker-number {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 900;
+  fill: var(--parchment-light);
   pointer-events: none;
 }
 
-.gate-name {
-  display: block;
+/* Marker label text */
+.marker-label {
   font-family: var(--font-accent);
-  font-size: 0.8rem;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--earth-dark);
-  text-shadow: 0 1px 2px rgba(244, 232, 193, 0.8);
-  white-space: nowrap;
+  fill: var(--earth-dark);
+  pointer-events: none;
+  text-shadow: 0 0 4px var(--parchment);
 }
 
-.gate-status-text {
-  display: block;
+.marker-sublabel {
   font-family: var(--font-body);
-  font-size: 0.7rem;
-  color: var(--earth-medium);
-  margin-top: 2px;
+  font-size: 8px;
+  fill: var(--earth-medium);
+  opacity: 0.8;
+  pointer-events: none;
 }
 
-.gate-marker.completed .gate-status-text {
-  color: var(--victory-green);
+/* Locked state */
+.gate-marker-svg.locked {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
-/* Map legend */
+.gate-marker-svg.locked .marker-bg {
+  fill: var(--locked-gray);
+  stroke: var(--locked-gray);
+}
+
+.gate-marker-svg.locked .marker-pulse {
+  animation: none;
+  opacity: 0;
+}
+
+.gate-marker-svg.locked .marker-glow {
+  opacity: 0;
+}
+
+/* Completed state */
+.gate-marker-svg.completed .marker-bg {
+  fill: var(--victory-green);
+  stroke: var(--gold);
+}
+
+.gate-marker-svg.completed .marker-pulse {
+  animation: none;
+  opacity: 0;
+}
+
+/* ===== COMPASS ROSE ===== */
+.compass-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--earth-medium);
+  opacity: 0.7;
+}
+
+.compass-n {
+  fill: var(--accent-red);
+  opacity: 0.9;
+}
+
+/* ===== SCALE BAR ===== */
+.scale-text {
+  font-family: var(--font-body);
+  font-size: 9px;
+  fill: var(--earth-medium);
+  opacity: 0.7;
+}
+
+/* ===== TITLE CARTOUCHE ===== */
+.cartouche-bg {
+  fill: rgba(244, 232, 193, 0.85);
+  stroke: var(--earth-medium);
+  stroke-width: 1.5;
+}
+
+.cartouche-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 900;
+  fill: var(--earth-dark);
+  letter-spacing: 0.15em;
+}
+
+.cartouche-subtitle {
+  font-family: var(--font-accent);
+  font-size: 12px;
+  fill: var(--earth-medium);
+  letter-spacing: 0.2em;
+}
+
+/* ===== MAP LEGEND ===== */
 .map-legend {
   position: absolute;
-  bottom: var(--space-lg);
+  bottom: var(--space-md);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: var(--space-lg);
-  padding: var(--space-sm) var(--space-lg);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-size: 0.75rem;
+  padding: var(--space-xs) var(--space-lg);
+  background: rgba(244, 232, 193, 0.85);
+  border: 1px solid var(--earth-medium);
+  border-radius: 20px;
+  font-size: 0.7rem;
   color: var(--earth-medium);
+  z-index: 4;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .legend-item {
@@ -454,6 +552,47 @@ p {
 .legend-dot.active    { background: var(--accent-red); border-color: var(--gold); }
 .legend-dot.locked    { background: var(--locked-gray); border-color: var(--locked-gray); }
 .legend-dot.completed { background: var(--victory-green); border-color: var(--gold); }
+
+/* ===== RESPONSIVE MAP ===== */
+@media (max-width: 768px) {
+  .map-container {
+    padding: var(--space-sm);
+    min-height: calc(100vh - 70px);
+  }
+
+  .map-frame {
+    aspect-ratio: auto;
+    height: calc(100vh - 90px);
+    max-width: 100%;
+  }
+
+  .label-strongpoint,
+  .label-viet-place,
+  .label-airstrip {
+    display: none;
+  }
+
+  .label-river { font-size: 12px; }
+  .label-valley { font-size: 16px; }
+
+  .marker-label { font-size: 9px; }
+  .marker-sublabel { display: none; }
+  .marker-number { font-size: 12px; }
+  .marker-bg { r: 14; }
+  .marker-pulse { r: 24; }
+
+  .cartouche-title { font-size: 11px; }
+  .cartouche-subtitle { font-size: 9px; }
+
+  .compass-rose { display: none; }
+  .scale-bar { display: none; }
+
+  .map-legend {
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-md);
+    font-size: 0.6rem;
+  }
+}
 
 /* ----- Modal / Overlay ----- */
 .modal-overlay {

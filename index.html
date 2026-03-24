@@ -47,84 +47,179 @@
 
   <!-- ===== MAIN: MAP VIEW ===== -->
   <main class="map-container" id="map-container">
-    <div class="map-bg">
-      <!-- Decorative mountain/terrain elements -->
-      <div class="terrain terrain-mountains"></div>
-      <div class="terrain terrain-valley"></div>
-      <div class="terrain terrain-river"></div>
+    <div class="map-frame">
+      <!-- Aged paper edge border -->
+      <div class="map-border-edge"></div>
 
-      <!-- Trail connecting gates -->
-      <svg class="trail-path" id="trail-path" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
-        <path class="trail-line" d="M 150,120 C 250,180 300,280 380,320 S 500,350 550,380 S 650,430 700,460 S 800,520 850,560" />
-      </svg>
+      <div class="map-bg">
+        <!-- AI-generated topographic base map -->
+        <img src="images/map/dien-bien-phu-map.png" alt="Bản đồ chiến dịch Điện Biên Phủ" class="map-base-image" draggable="false">
 
-      <!-- 5 Gate Markers -->
-      <div class="gate-marker gate-1" id="gate-marker-1" data-gate="1">
-        <div class="gate-pulse"></div>
-        <div class="gate-icon">
-          <span class="gate-number">I</span>
-        </div>
-        <div class="gate-label">
-          <span class="gate-name">Lời Kêu Gọi</span>
-          <span class="gate-status-text">Bắt đầu</span>
-        </div>
+        <!-- SVG Overlay: labels, trail, markers, decorations -->
+        <svg class="map-svg-overlay" id="map-svg-overlay" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <!-- Glow filter for trail -->
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <!-- Drop shadow for labels -->
+            <filter id="label-shadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#f4e8c1" flood-opacity="0.9"/>
+            </filter>
+            <!-- Marker glow -->
+            <radialGradient id="marker-glow-gradient">
+              <stop offset="0%" stop-color="#f9a825" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#f9a825" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- ===== GEOGRAPHIC LABELS ===== -->
+          <g class="geo-labels" filter="url(#label-shadow)">
+            <!-- River label -->
+            <text x="520" y="200" class="label-river" transform="rotate(-70, 520, 200)">Sông Nậm Rốm</text>
+
+            <!-- Valley label -->
+            <text x="600" y="420" class="label-valley">Mường Thanh</text>
+
+            <!-- French strongpoint labels -->
+            <text x="310" y="260" class="label-strongpoint">Béatrice</text>
+            <text x="400" y="170" class="label-strongpoint">Gabrielle</text>
+            <text x="760" y="370" class="label-strongpoint">Dominique</text>
+            <text x="850" y="450" class="label-strongpoint">Éliane</text>
+            <text x="550" y="540" class="label-strongpoint">Claudine</text>
+            <text x="430" y="480" class="label-strongpoint">Huguette</text>
+            <text x="600" y="690" class="label-strongpoint">Isabelle</text>
+
+            <!-- Vietnamese place names -->
+            <text x="330" y="290" class="label-viet-place">Him Lam</text>
+            <text x="830" y="480" class="label-viet-place">Đồi A1</text>
+
+            <!-- Airstrip indicator -->
+            <line x1="420" y1="350" x2="700" y2="500" class="airstrip-line"/>
+            <text x="560" y="410" class="label-airstrip" transform="rotate(25, 560, 410)">Sân bay Mường Thanh</text>
+          </g>
+
+          <!-- ===== TRAIL PATH (I→V) ===== -->
+          <g class="trail-group">
+            <!-- Trail shadow -->
+            <path class="trail-shadow" d="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
+            <!-- Trail line with marching dots -->
+            <path class="trail-line" id="trail-line" d="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650" filter="url(#glow)"/>
+            <!-- Moving dot along trail -->
+            <circle class="trail-dot" r="5">
+              <animateMotion dur="6s" repeatCount="indefinite" path="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
+            </circle>
+          </g>
+
+          <!-- ===== GATE MARKERS ===== -->
+          <!-- Gate I: Ba Đình / Lời Kêu Gọi — top-left inset origin -->
+          <g class="gate-marker-svg" id="gate-svg-1" data-gate="1" transform="translate(170, 140)">
+            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
+            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="18" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="6" text-anchor="middle">I</text>
+            <text class="marker-label" x="0" y="38" text-anchor="middle">Lời Kêu Gọi</text>
+            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Quảng trường Ba Đình</text>
+          </g>
+
+          <!-- Gate II: Tuần Giáo supply trail — upper-left mountain pass -->
+          <g class="gate-marker-svg" id="gate-svg-2" data-gate="2" transform="translate(350, 310)">
+            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
+            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="18" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="6" text-anchor="middle">II</text>
+            <text class="marker-label" x="0" y="38" text-anchor="middle">Cuộc Hành Quân</text>
+            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Tuần Giáo → ĐBP</text>
+          </g>
+
+          <!-- Gate III: Mường Thanh valley center — trench network -->
+          <g class="gate-marker-svg" id="gate-svg-3" data-gate="3" transform="translate(580, 430)">
+            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
+            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="18" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="6" text-anchor="middle">III</text>
+            <text class="marker-label" x="0" y="38" text-anchor="middle">Đào Chiến Hào</text>
+            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Thung lũng Mường Thanh</text>
+          </g>
+
+          <!-- Gate IV: Him Lam + A1 — east hills -->
+          <g class="gate-marker-svg" id="gate-svg-4" data-gate="4" transform="translate(800, 490)">
+            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
+            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="18" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="6" text-anchor="middle">IV</text>
+            <text class="marker-label" x="0" y="38" text-anchor="middle">56 Ngày Đêm</text>
+            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Him Lam · Đồi A1</text>
+          </g>
+
+          <!-- Gate V: De Castries bunker — center-south command -->
+          <g class="gate-marker-svg" id="gate-svg-5" data-gate="5" transform="translate(950, 650)">
+            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
+            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="18" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="6" text-anchor="middle">V</text>
+            <text class="marker-label" x="0" y="38" text-anchor="middle">Chiến Thắng</text>
+            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Hầm De Castries</text>
+          </g>
+
+          <!-- ===== DECORATIVE ELEMENTS ===== -->
+          <!-- Compass Rose — bottom-right -->
+          <g class="compass-rose" transform="translate(1100, 720) scale(0.6)">
+            <circle r="35" fill="none" stroke="#5c3d2e" stroke-width="1.5" opacity="0.6"/>
+            <circle r="28" fill="none" stroke="#5c3d2e" stroke-width="0.8" opacity="0.4"/>
+            <!-- N/S/E/W points -->
+            <polygon points="0,-30 -5,-8 5,-8" fill="#c62828" opacity="0.8"/>
+            <polygon points="0,30 -5,8 5,8" fill="#5c3d2e" opacity="0.6"/>
+            <polygon points="30,0 8,-5 8,5" fill="#5c3d2e" opacity="0.6"/>
+            <polygon points="-30,0 -8,-5 -8,5" fill="#5c3d2e" opacity="0.6"/>
+            <!-- Diagonal points -->
+            <polygon points="20,-20 2,-6 6,-2" fill="#5c3d2e" opacity="0.4"/>
+            <polygon points="-20,-20 -2,-6 -6,-2" fill="#5c3d2e" opacity="0.4"/>
+            <polygon points="20,20 2,6 6,2" fill="#5c3d2e" opacity="0.4"/>
+            <polygon points="-20,20 -2,6 -6,2" fill="#5c3d2e" opacity="0.4"/>
+            <!-- Labels -->
+            <text x="0" y="-38" text-anchor="middle" class="compass-label compass-n">B</text>
+            <text x="0" y="48" text-anchor="middle" class="compass-label">N</text>
+            <text x="44" y="5" text-anchor="middle" class="compass-label">Đ</text>
+            <text x="-44" y="5" text-anchor="middle" class="compass-label">T</text>
+          </g>
+
+          <!-- Scale Bar — bottom-left -->
+          <g class="scale-bar" transform="translate(80, 750)">
+            <line x1="0" y1="0" x2="100" y2="0" stroke="#5c3d2e" stroke-width="2"/>
+            <line x1="0" y1="-5" x2="0" y2="5" stroke="#5c3d2e" stroke-width="1.5"/>
+            <line x1="50" y1="-3" x2="50" y2="3" stroke="#5c3d2e" stroke-width="1"/>
+            <line x1="100" y1="-5" x2="100" y2="5" stroke="#5c3d2e" stroke-width="1.5"/>
+            <text x="0" y="16" class="scale-text" text-anchor="middle">0</text>
+            <text x="50" y="16" class="scale-text" text-anchor="middle">2</text>
+            <text x="100" y="16" class="scale-text" text-anchor="middle">4 km</text>
+          </g>
+
+          <!-- Title Cartouche — top-center -->
+          <g class="title-cartouche" transform="translate(600, 50)">
+            <rect x="-220" y="-30" width="440" height="60" rx="6" class="cartouche-bg"/>
+            <rect x="-224" y="-34" width="448" height="68" rx="8" fill="none" stroke="#5c3d2e" stroke-width="1.5" opacity="0.5"/>
+            <text x="0" y="2" text-anchor="middle" class="cartouche-title">BẢN ĐỒ CHIẾN DỊCH ĐIỆN BIÊN PHỦ</text>
+            <text x="0" y="20" text-anchor="middle" class="cartouche-subtitle">— 1954 —</text>
+          </g>
+        </svg>
       </div>
 
-      <div class="gate-marker gate-2 locked" id="gate-marker-2" data-gate="2">
-        <div class="gate-pulse"></div>
-        <div class="gate-icon">
-          <span class="gate-number">II</span>
+      <!-- Map legend -->
+      <div class="map-legend">
+        <div class="legend-item">
+          <span class="legend-dot active"></span> Đang mở
         </div>
-        <div class="gate-label">
-          <span class="gate-name">Cuộc Hành Quân</span>
-          <span class="gate-status-text">🔒</span>
+        <div class="legend-item">
+          <span class="legend-dot locked"></span> Chưa mở khóa
         </div>
-      </div>
-
-      <div class="gate-marker gate-3 locked" id="gate-marker-3" data-gate="3">
-        <div class="gate-pulse"></div>
-        <div class="gate-icon">
-          <span class="gate-number">III</span>
+        <div class="legend-item">
+          <span class="legend-dot completed"></span> Hoàn thành
         </div>
-        <div class="gate-label">
-          <span class="gate-name">Đào Chiến Hào</span>
-          <span class="gate-status-text">🔒</span>
-        </div>
-      </div>
-
-      <div class="gate-marker gate-4 locked" id="gate-marker-4" data-gate="4">
-        <div class="gate-pulse"></div>
-        <div class="gate-icon">
-          <span class="gate-number">IV</span>
-        </div>
-        <div class="gate-label">
-          <span class="gate-name">56 Ngày Đêm</span>
-          <span class="gate-status-text">🔒</span>
-        </div>
-      </div>
-
-      <div class="gate-marker gate-5 locked" id="gate-marker-5" data-gate="5">
-        <div class="gate-pulse"></div>
-        <div class="gate-icon">
-          <span class="gate-number">V</span>
-        </div>
-        <div class="gate-label">
-          <span class="gate-name">Chiến Thắng</span>
-          <span class="gate-status-text">🔒</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Map legend -->
-    <div class="map-legend">
-      <div class="legend-item">
-        <span class="legend-dot active"></span> Đang mở
-      </div>
-      <div class="legend-item">
-        <span class="legend-dot locked"></span> Chưa mở khóa
-      </div>
-      <div class="legend-item">
-        <span class="legend-dot completed"></span> Hoàn thành
       </div>
     </div>
   </main>
