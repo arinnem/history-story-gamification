@@ -226,6 +226,86 @@ p {
   transition: width var(--transition-slow);
 }
 
+/* Mute toggle button */
+.btn-mute {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-mute:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--gold);
+}
+
+/* ===== HOVER MICRO-ANIMATIONS ===== */
+/* Primary/secondary buttons */
+.btn-primary,
+.btn-secondary {
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-md), 0 4px 12px rgba(198, 40, 40, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Gallery/Badge buttons */
+.btn-gallery,
+.btn-badges {
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.btn-gallery:hover,
+.btn-badges:hover {
+  transform: translateY(-1px);
+}
+
+/* Word tiles (puzzle) */
+.word-tile,
+.match-item,
+.event-card {
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.word-tile:hover:not(.placed) {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.match-item:hover:not(.matched) {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+
 /* ----- Map Container ----- */
 .map-container {
   position: relative;

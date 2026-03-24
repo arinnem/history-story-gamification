@@ -50,6 +50,7 @@
           <span class="badges-label">Huy Hiệu</span>
           <span class="badges-count" id="badges-count">0/5</span>
         </button>
+        <button class="btn-mute" id="mute-toggle" title="Tắt âm thanh">🔇</button>
       </div>
     </div>
     <!-- Progress bar -->
@@ -276,6 +277,8 @@
   <script src="js/gate-renderer.js"></script>
   <script src="js/card-reveal.js"></script>
   <script src="js/badge-reveal.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/audio.js"></script>
   <script src="js/intro.js"></script>
   <script>
     // Initialize app
@@ -284,6 +287,7 @@
       MapView.init();
       Gallery.init();
       IntroController.init();
+      AudioManager.init();
 
       // Completion screen after all 5 gates
       document.addEventListener('allGatesCompleted', showCompletionScreen);

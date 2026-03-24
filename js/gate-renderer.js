@@ -459,6 +459,20 @@ const GateRenderer = (() => {
     div.textContent = message;
     container.appendChild(div);
 
+    // Trigger visual effects
+    if (typeof Effects !== 'undefined') {
+      if (success) {
+        Effects.sparkle(container, { count: 15 });
+      } else {
+        Effects.shake(container);
+      }
+    }
+
+    // Play sound
+    if (typeof AudioManager !== 'undefined') {
+      AudioManager.play(success ? 'correct' : 'wrong');
+    }
+
     if (!success) {
       setTimeout(() => div.remove(), 3000);
     }
@@ -476,10 +490,17 @@ const GateRenderer = (() => {
     if (cardArea && typeof CardReveal !== 'undefined') {
       CardReveal.render(cardArea, gate.character);
 
+      // Sparkle effect on card
+      setTimeout(() => {
+        if (typeof Effects !== 'undefined') Effects.sparkle(cardArea, { count: 25 });
+        if (typeof AudioManager !== 'undefined') AudioManager.play('flip');
+      }, 800);
+
       // Gate 4 has a second card
       if (gate.id === 4 && gate.character2) {
         setTimeout(() => {
           CardReveal.render(cardArea, gate.character2, true);
+          if (typeof Effects !== 'undefined') Effects.sparkle(cardArea, { count: 20 });
         }, 2000);
       }
     }
@@ -490,6 +511,15 @@ const GateRenderer = (() => {
     setTimeout(() => {
       if (badgeArea && typeof BadgeReveal !== 'undefined') {
         BadgeReveal.render(badgeArea, gate.badge);
+
+        // Golden ring + sparkle on badge
+        setTimeout(() => {
+          if (typeof Effects !== 'undefined') {
+            Effects.goldenRing(badgeArea);
+            Effects.sparkle(badgeArea, { count: 20, colors: ['#f9a825', '#ffecb3', '#fff8e1'] });
+          }
+          if (typeof AudioManager !== 'undefined') AudioManager.play('badge');
+        }, 500);
       }
     }, delay);
 

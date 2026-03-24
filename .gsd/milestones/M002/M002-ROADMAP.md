@@ -68,11 +68,11 @@ Transform "Con Đường Điện Biên" from a functional prototype into a conte
 **Demo:** Puzzle pieces have subtle bounce on hover. Wrong answers trigger screen shake. Card flip has sparkle trail. Badge reveal has expanding golden ring. Optional ambient background music. All animations run at 60fps.
 
 **Tasks:**
-- [ ] T01: Add particle effects to card flip (sparkles using CSS/canvas)
-- [ ] T02: Add expanding golden ring effect to badge reveal
-- [ ] T03: Add screen-shake effect on wrong puzzle answers
-- [ ] T04: Add hover micro-animations to all interactive elements (buttons scale, tiles lift)
-- [ ] T05: Add optional sound effects (puzzle correct/wrong, card flip, badge earn, gate unlock) with mute toggle
+- [x] T01: Add particle effects to card flip (sparkles using CSS/canvas)
+- [x] T02: Add expanding golden ring effect to badge reveal
+- [x] T03: Add screen-shake effect on wrong puzzle answers
+- [x] T04: Add hover micro-animations to all interactive elements (buttons scale, tiles lift)
+- [x] T05: Add optional sound effects (puzzle correct/wrong, card flip, badge earn, gate unlock) with mute toggle
 - [ ] T06: Performance audit — ensure 60fps on all animations, lazy-load images, compress assets
 
 **Files:** `js/effects.js` (new), `js/audio.js` (new), `sounds/` (new), all CSS files
