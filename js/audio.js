@@ -6,19 +6,19 @@ const AudioManager = (() => {
   const STORAGE_KEY = 'conDuongDienBien_muted';
   let muted = true; // Default: muted (contest-safe)
 
-  // Sound catalog — paths to audio files
+  // Sound catalog — paths to audio files (CC0 from Mixkit)
   const sounds = {
-    correct:  null,
-    wrong:    null,
-    flip:     null,
-    badge:    null,
-    unlock:   null,
-    click:    null,
+    correct:  'audio/correct.wav',
+    wrong:    'audio/wrong.wav',
+    flip:     'audio/flip.wav',
+    badge:    'audio/badge.wav',
+    unlock:   'audio/unlock.wav',
+    click:    'audio/click.wav',
   };
 
   function init() {
     // Load mute preference
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = sessionStorage.getItem(STORAGE_KEY);
     if (stored !== null) {
       muted = stored === 'true';
     }
@@ -29,7 +29,7 @@ const AudioManager = (() => {
       updateMuteButton(muteBtn);
       muteBtn.addEventListener('click', () => {
         muted = !muted;
-        localStorage.setItem(STORAGE_KEY, String(muted));
+        sessionStorage.setItem(STORAGE_KEY, String(muted));
         updateMuteButton(muteBtn);
       });
     }

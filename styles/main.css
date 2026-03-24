@@ -88,6 +88,8 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   /* Parchment texture via gradient */
   background-image:
@@ -102,6 +104,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   color: var(--earth-dark);
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; }
@@ -113,6 +116,7 @@ p {
   font-size: clamp(0.9rem, 2vw, 1.05rem);
   line-height: 1.75;
   color: var(--ink-brown);
+  text-wrap: pretty;
 }
 
 /* ----- App Header ----- */
@@ -208,6 +212,7 @@ p {
 .badges-count {
   font-weight: 700;
   color: var(--gold);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Progress bar */
@@ -267,7 +272,7 @@ p {
 
 .btn-primary:active,
 .btn-secondary:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.96);
 }
 
 /* Gallery/Badge buttons */
@@ -431,39 +436,46 @@ p {
 /* ===== TRAIL PATH ===== */
 .trail-shadow {
   fill: none;
-  stroke: rgba(44, 24, 16, 0.15);
-  stroke-width: 6;
+  stroke: rgba(44, 24, 16, 0.25);
+  stroke-width: 8;
   stroke-linecap: round;
 }
 
 .trail-line {
   fill: none;
-  stroke: var(--gold-dark);
-  stroke-width: 3;
-  stroke-dasharray: 12 8;
+  stroke: var(--gold);
+  stroke-width: 4;
+  stroke-dasharray: 14 8;
   stroke-linecap: round;
-  opacity: 0.8;
+  opacity: 0.9;
   animation: trailMarch 1.5s linear infinite;
 }
 
 @keyframes trailMarch {
   from { stroke-dashoffset: 0; }
-  to { stroke-dashoffset: -20; }
+  to { stroke-dashoffset: -22; }
 }
 
 .trail-dot {
-  fill: var(--gold);
-  filter: drop-shadow(0 0 4px rgba(249, 168, 37, 0.8));
+  fill: var(--gold-glow);
+  r: 6;
+  filter: drop-shadow(0 0 6px rgba(249, 168, 37, 0.9));
 }
 
 /* ===== GATE MARKERS (SVG) ===== */
 .gate-marker-svg {
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.gate-marker-svg:hover {
-  transform: scale(1.12);
+.gate-marker-svg:hover .marker-bg {
+  fill: var(--gold-dark);
+  stroke: var(--gold-glow);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(249, 168, 37, 0.6)) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.gate-marker-svg:hover .marker-number {
+  fill: var(--earth-dark);
 }
 
 /* Marker pulse ring */
@@ -476,8 +488,8 @@ p {
 }
 
 @keyframes markerPulse {
-  0%   { r: 18; opacity: 0.6; }
-  100% { r: 35; opacity: 0; }
+  0%   { r: 24; opacity: 0.6; }
+  100% { r: 45; opacity: 0; }
 }
 
 /* Marker glow circle */
@@ -490,15 +502,15 @@ p {
 .marker-bg {
   fill: var(--accent-red);
   stroke: var(--gold);
-  stroke-width: 2.5;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  stroke-width: 3;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
   transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
 /* Marker number text */
 .marker-number {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 900;
   fill: var(--parchment-light);
   pointer-events: none;
@@ -804,6 +816,8 @@ p {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--gold);
+  outline: 1px solid rgba(44, 24, 16, 0.08);
+  outline-offset: -1px;
 }
 
 /* ----- Badge Gallery ----- */
@@ -866,6 +880,7 @@ p {
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .character-card.flipped .character-card-inner {
@@ -1102,13 +1117,290 @@ p {
   color: var(--accent-red);
 }
 
+/* ----- Completion Screen ----- */
+.completion-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: var(--space-2xl);
+  text-align: center;
+  background: linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 50%, var(--parchment-dark) 100%);
+  animation: fadeIn 0.6s ease;
+}
+
+.completion-hero-emoji {
+  font-size: 4rem;
+  margin-bottom: var(--space-md);
+  animation: badgeBounce var(--transition-bounce);
+}
+
+.completion-title {
+  font-family: var(--font-display);
+  color: var(--accent-red);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  margin-bottom: var(--space-sm);
+  text-wrap: balance;
+}
+
+.completion-description {
+  font-family: var(--font-accent);
+  color: var(--earth-medium);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-2xl);
+  max-width: 600px;
+  text-wrap: pretty;
+}
+
+.completion-stats {
+  display: flex;
+  gap: var(--space-xl);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2xl);
+}
+
+.completion-stat-card {
+  background: var(--glass-bg);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: var(--space-md) var(--space-xl);
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.completion-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+}
+
+.completion-stat-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent-red);
+  font-variant-numeric: tabular-nums;
+}
+
+.completion-stat-label {
+  font-size: 0.8rem;
+  color: var(--earth-medium);
+}
+
+.completion-section-title {
+  font-family: var(--font-display);
+  color: var(--gold-dark);
+  margin-bottom: var(--space-md);
+}
+
+.completion-collection {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2xl);
+}
+
+.completion-card-item {
+  text-align: center;
+}
+
+.completion-card-item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  object-fit: cover;
+  outline: 1px solid rgba(44, 24, 16, 0.08);
+  outline-offset: -1px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.completion-card-item img:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-glow);
+}
+
+.completion-card-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 4px;
+  color: var(--earth-dark);
+}
+
+.completion-badge-item {
+  text-align: center;
+}
+
+.completion-badge-icon {
+  font-size: 2rem;
+}
+
+.completion-badge-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+}
+
+.completion-badges {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2xl);
+}
+
+.completion-quote-area {
+  border-top: 2px solid var(--khaki);
+  padding-top: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.completion-quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--earth-medium);
+  max-width: 500px;
+  margin: 0 auto var(--space-lg);
+}
+
+.completion-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.completion-credit {
+  margin-top: var(--space-2xl);
+  font-size: 0.75rem;
+  color: var(--khaki);
+}
+
+/* ----- Card/Badge Preview Modal ----- */
+.card-preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 24, 16, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.card-preview-content {
+  background: var(--parchment-light);
+  border: 3px solid var(--gold);
+  border-radius: 20px;
+  padding: var(--space-2xl);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), var(--shadow-glow);
+  animation: slideUp 0.3s ease;
+}
+
+.card-preview-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--earth-medium);
+  transition: color var(--transition-fast);
+}
+
+.card-preview-close:hover {
+  color: var(--accent-red);
+}
+
+.card-preview-portrait {
+  margin-bottom: var(--space-md);
+}
+
+.card-preview-portrait img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--gold);
+  object-fit: cover;
+  box-shadow: var(--shadow-glow);
+  outline: 1px solid rgba(44, 24, 16, 0.08);
+  outline-offset: -1px;
+}
+
+.card-preview-name {
+  font-family: var(--font-display);
+  color: var(--accent-red);
+  font-size: 1.4rem;
+  margin-bottom: var(--space-xs);
+}
+
+.card-preview-title {
+  font-family: var(--font-accent);
+  color: var(--earth-medium);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+}
+
+.card-preview-achievement {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-brown);
+  margin-bottom: var(--space-md);
+}
+
+.card-preview-quote {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--olive);
+  border-top: 1px solid var(--khaki);
+  padding-top: var(--space-sm);
+}
+
+.badge-preview-icon {
+  font-size: 5rem;
+  margin-bottom: var(--space-md);
+}
+
 /* ----- Footer ----- */
 .app-footer {
-  text-align: center;
+  text-align: right;
   padding: var(--space-lg);
   color: var(--earth-medium);
   font-size: 0.8rem;
   border-top: 1px solid var(--khaki);
+}
+
+/* ===== FOCUS-VISIBLE STYLES ===== */
+/* Keyboard navigation rings for all interactive elements */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-gallery:focus-visible,
+.btn-badges:focus-visible,
+.btn-mute:focus-visible,
+.modal-close:focus-visible,
+.hint-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(249, 168, 37, 0.25);
+}
+
+.gate-marker-svg:focus-visible {
+  outline: none;
+}
+
+.gate-marker-svg:focus-visible .marker-bg {
+  stroke: var(--gold-glow);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 8px rgba(249, 168, 37, 0.6));
 }
 
 .footer-contest {

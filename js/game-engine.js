@@ -25,8 +25,11 @@ const GameEngine = (() => {
 
   let state = null;
 
-  // Initialize — load from localStorage or create fresh state
+  // Initialize — load from sessionStorage or create fresh state
   function init() {
+    // One-time cleanup: remove stale localStorage keys from old versions
+    try { ['conDuongDienBien_state', 'conDuongDienBien_muted', 'conDuongDienBien_introSeen'].forEach(k => localStorage.removeItem(k)); } catch(e) {}
+
     state = loadState();
     if (!state.startedAt) {
       state.startedAt = new Date().toISOString();
@@ -36,10 +39,10 @@ const GameEngine = (() => {
     console.log('[GameEngine] Initialized. Current gate:', state.currentGate);
   }
 
-  // Load state from localStorage
+  // Load state from sessionStorage
   function loadState() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = sessionStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         // Merge with defaults in case schema changed
@@ -51,10 +54,10 @@ const GameEngine = (() => {
     return JSON.parse(JSON.stringify(DEFAULT_STATE));
   }
 
-  // Save state to localStorage
+  // Save state to sessionStorage
   function saveState() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) {
       console.error('[GameEngine] Failed to save state:', e.message);
     }
@@ -139,7 +142,7 @@ const GameEngine = (() => {
 
   // Reset all progress
   function resetProgress() {
-    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
     state = JSON.parse(JSON.stringify(DEFAULT_STATE));
     state.startedAt = new Date().toISOString();
     saveState();

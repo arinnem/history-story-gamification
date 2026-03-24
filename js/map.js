@@ -29,26 +29,37 @@ const MapView = (() => {
     }
   }
 
-  // Bind click events to SVG gate markers
+  // Bind click and keyboard events to SVG gate markers
   function bindEvents() {
     for (let i = 1; i <= GameEngine.TOTAL_GATES; i++) {
       const marker = document.getElementById(`gate-svg-${i}`);
       if (!marker) continue;
 
-      marker.addEventListener('click', () => {
-        if (marker.classList.contains('locked')) {
-          // Shake animation on locked marker
-          marker.style.animation = 'shake 0.4s ease';
-          setTimeout(() => marker.style.animation = '', 400);
-          return;
+      // Click handler
+      marker.addEventListener('click', () => handleMarkerActivation(marker, i));
+
+      // Keyboard handler (Enter/Space)
+      marker.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleMarkerActivation(marker, i);
         }
-        openGate(i);
       });
     }
 
     // Listen for game state changes
     document.addEventListener('gateCompleted', () => updateMarkers());
     document.addEventListener('progressReset', () => updateMarkers());
+  }
+
+  function handleMarkerActivation(marker, gateId) {
+    if (marker.classList.contains('locked')) {
+      // Shake animation on locked marker
+      marker.style.animation = 'shake 0.4s ease';
+      setTimeout(() => marker.style.animation = '', 400);
+      return;
+    }
+    openGate(gateId);
   }
 
   // Open a gate view

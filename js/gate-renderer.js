@@ -16,6 +16,9 @@ const GateRenderer = (() => {
     const gateView = document.getElementById('gate-view');
     if (!gate || !gateView) return;
 
+    // Scroll to top when entering a new gate
+    window.scrollTo(0, 0);
+
     // Cleanup previous observers
     cleanup();
 
@@ -127,8 +130,11 @@ const GateRenderer = (() => {
         <div class="reward-fact-area" id="reward-fact-area"></div>
         <div class="reward-return">
           <button class="btn-primary" id="btn-return-map">
-            \ud83d\uddfa\ufe0f Quay v\u1ec1 b\u1ea3n \u0111\u1ed3
+            🗺️ Quay về bản đồ
           </button>
+          ${gate.id < 5 ? `<button class="btn-secondary" id="btn-next-gate" data-next="${gate.id + 1}">
+            Cổng tiếp theo →
+          </button>` : ''}
         </div>
       </div>
     `;
@@ -539,9 +545,17 @@ const GateRenderer = (() => {
     // Complete the gate
     GameEngine.completeGate(gate.id);
 
-    // Bind return button
+    // Bind return/next buttons
     setTimeout(() => {
       document.getElementById('btn-return-map')?.addEventListener('click', () => MapView.closeGate());
+      document.getElementById('btn-next-gate')?.addEventListener('click', (e) => {
+        const nextId = parseInt(e.currentTarget.dataset.next);
+        if (nextId && GameEngine.isGateUnlocked(nextId)) {
+          render(nextId);
+        } else {
+          MapView.closeGate();
+        }
+      });
     }, 100);
   }
 
@@ -569,9 +583,7 @@ const GateRenderer = (() => {
     `;
   }
 
-  return {
-    render
-  };
+  // return moved to end of IIFE (after helper function definitions)
 
   // ========================
   //  Scroll Reveal Observer
@@ -651,4 +663,9 @@ const GateRenderer = (() => {
     const bar = document.getElementById('reading-progress');
     if (bar) bar.style.width = '0%';
   }
+
+  return {
+    render,
+    cleanup
+  };
 })();

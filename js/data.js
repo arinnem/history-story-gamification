@@ -14,7 +14,13 @@ const GATES_DATA = {
         "Nhưng niềm vui độc lập chưa được bao lâu, thực dân Pháp quay trở lại với âm mưu xâm lược nước ta một lần nữa. Chúng mang theo vũ khí hiện đại, máy bay, xe tăng — quyết tâm chiếm lại Đông Dương.",
         "Trước tình hình đó, Chủ tịch Hồ Chí Minh ra lời kêu gọi toàn quốc kháng chiến: \"Hỡi đồng bào! Chúng ta phải đứng lên!\" Từ khắp mọi miền đất nước, thanh niên tình nguyện lên đường, nông dân gác cày cầm súng, và cả dân tộc bước vào cuộc kháng chiến trường kỳ chống thực dân Pháp."
       ],
-      images: [null, "images/gates/gate1_ba_dinh.png"]
+      images: [null, "images/gates/gate1_ba_dinh.png"],
+      quotes: [
+        null,
+        { text: "Tất cả mọi người đều sinh ra có quyền bình đẳng. Tạo hóa cho họ những quyền không ai có thể xâm phạm được.", attribution: "Hồ Chí Minh — Tuyên ngôn Độc lập, 2/9/1945" },
+        null,
+        { text: "Hỡi đồng bào! Chúng ta phải đứng lên! Bất kỳ đàn ông, đàn bà, bất kỳ người già, người trẻ, không chia tôn giáo, đảng phái, dân tộc. Hễ là người Việt Nam thì phải đứng lên đánh thực dân Pháp!", attribution: "Hồ Chí Minh — Lời kêu gọi Toàn quốc kháng chiến, 19/12/1946" }
+      ]
     },
     puzzle: {
       type: "decode",
@@ -54,7 +60,13 @@ const GATES_DATA = {
         "Hàng vạn dân công từ khắp các tỉnh miền Bắc và miền Trung tình nguyện tham gia. Họ dùng xe đạp thồ — những chiếc xe đạp được gia cố đặc biệt, có thể chở tới 200-300 kg hàng hóa. Đoàn xe đạp thồ nối đuôi nhau trên những con đường mòn xuyên rừng, vượt đèo, lội suối.",
         "Không chỉ xe đạp, dân công còn gánh bộ, dùng ngựa thồ, voi chở, và cả bè mảng trên sông. Trong điều kiện bom đạn, mưa rừng, muỗi vắt, họ vẫn kiên trì ngày đêm tiếp tế cho tiền tuyến. Đây là kỳ tích hậu cần chưa từng có trong lịch sử quân sự thế giới."
       ],
-      images: [null, null, "images/gates/gate2_bicycle_convoy.png"]
+      images: [null, null, "images/gates/gate2_bicycle_convoy.png"],
+      quotes: [
+        null,
+        null,
+        { text: "Xe chưa qua, nhà không tiếc. Đường chưa thông, không nằm nghỉ.", attribution: "Khẩu hiệu dân công chiến dịch Điện Biên Phủ" },
+        { text: "Cả nước hướng về Điện Biên. Mỗi hạt gạo, mỗi viên đạn đều thấm đẫm mồ hôi và nước mắt của hàng vạn dân công.", attribution: "Kể chuyện Điện Biên Phủ — NXB Kim Đồng" }
+      ]
     },
     puzzle: {
       type: "matching",
@@ -97,7 +109,13 @@ const GATES_DATA = {
         "Đây là quyết định dũng cảm và sáng suốt nhất trong chiến dịch. Bộ đội bắt đầu đào hệ thống chiến hào bao vây, dần dần siết chặt vòng vây quanh quân Pháp. Hàng trăm km giao thông hào được đào bằng tay, trong đêm tối, dưới bom đạn.",
         "Từng mét chiến hào tiến gần hơn đến các cứ điểm của địch. Quân Pháp kinh hoàng nhận ra: mỗi sáng thức dậy, hệ thống chiến hào Việt Minh lại tiến thêm một bước, như những ngón tay khổng lồ đang bóp nghẹt cứ điểm từ mọi phía."
       ],
-      images: [null, null, "images/gates/gate3_trenches.png"]
+      images: [null, null, "images/gates/gate3_trenches.png"],
+      quotes: [
+        null,
+        { text: "Đánh chắc, tiến chắc. Chắc thắng mới đánh, không chắc thắng không đánh.", attribution: "Đại tướng Võ Nguyên Giáp" },
+        null,
+        { text: "Mỗi sáng thức dậy, quân Pháp kinh hoàng nhận ra chiến hào Việt Minh lại tiến thêm một bước — như những ngón tay khổng lồ đang bóp nghẹt cứ điểm.", attribution: "Kể chuyện Điện Biên Phủ — NXB Kim Đồng" }
+      ]
     },
     puzzle: {
       type: "chronological",
@@ -141,7 +159,13 @@ const GATES_DATA = {
         "Tại cứ điểm Him Lam, anh hùng Phan Đình Giót đã lấy thân mình lấp lỗ châu mai, dập tắt hỏa lực địch để đồng đội xung phong. Trên đường kéo pháo, anh hùng Tô Vĩnh Diện đã lấy thân chèn pháo không cho khẩu pháo lăn xuống vực.",
         "Những ngày ác liệt nhất diễn ra tại đồi A1 (Éliane 2) — nơi hai bên giằng co quyết liệt suốt 36 ngày đêm. Đồi A1 đổi chủ nhiều lần trước khi quân ta làm chủ hoàn toàn, mở đường cho trận tổng tấn công cuối cùng."
       ],
-      images: [null, null, "images/gates/gate4_battle.png"]
+      images: [null, null, "images/gates/gate4_battle.png"],
+      quotes: [
+        null,
+        null,
+        { text: "Quyết tử cho Tổ quốc quyết sinh! Các đồng chí, hãy tiến lên!", attribution: "Lời hô xung phong tại cứ điểm Him Lam, 13/3/1954" },
+        { text: "Đồi A1 — ngọn đồi máu lửa, nơi hai bên giằng co 36 ngày đêm. Mảnh đất ấy thấm đẫm máu xương của bao chiến sĩ anh dũng.", attribution: "Kể chuyện Điện Biên Phủ — NXB Kim Đồng" }
+      ]
     },
     puzzle: {
       type: "matching",
@@ -192,7 +216,13 @@ const GATES_DATA = {
         "Chiến thắng Điện Biên Phủ \"lừng lẫy năm châu, chấn động địa cầu\" đã đặt dấu chấm hết cho gần 100 năm đô hộ của thực dân Pháp tại Việt Nam. Đây không chỉ là chiến thắng của quân đội Việt Nam, mà còn là biểu tượng cho tinh thần đấu tranh của các dân tộc bị áp bức trên toàn thế giới.",
         "Ngày 21 tháng 7 năm 1954, Hiệp định Genève được ký kết, công nhận độc lập, chủ quyền và toàn vẹn lãnh thổ của Việt Nam. Chiến thắng Điện Biên Phủ mãi mãi đi vào lịch sử dân tộc Việt Nam và lịch sử thế giới như một trong những chiến thắng vĩ đại nhất của thế kỷ 20."
       ],
-      images: [null, null, "images/gates/gate5_victory.png"]
+      images: [null, null, "images/gates/gate5_victory.png"],
+      quotes: [
+        { text: "Lá cờ 'Quyết chiến Quyết thắng' phấp phới tung bay trên nóc hầm De Castries — chiến thắng đã thuộc về chúng ta!", attribution: "Kể chuyện Điện Biên Phủ — NXB Kim Đồng" },
+        null,
+        { text: "Lừng lẫy năm châu, chấn động địa cầu! Điện Biên Phủ như một Bạch Đằng, Chi Lăng, Đống Đa của thế kỷ 20.", attribution: "Đại tướng Võ Nguyên Giáp" },
+        null
+      ]
     },
     puzzle: {
       type: "jigsaw",

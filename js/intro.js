@@ -20,7 +20,7 @@ const IntroController = (() => {
     }
 
     // Check if intro was already seen
-    if (localStorage.getItem(STORAGE_KEY) === 'true') {
+    if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
       skipImmediate();
       console.log('[Intro] Auto-skipped (returning user).');
       return;
@@ -59,7 +59,7 @@ const IntroController = (() => {
 
   function completeIntro() {
     // Mark as seen
-    localStorage.setItem(STORAGE_KEY, 'true');
+    sessionStorage.setItem(STORAGE_KEY, 'true');
 
     // Fade out overlay
     if (overlay) {

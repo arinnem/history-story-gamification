@@ -6,6 +6,7 @@ const Gallery = (() => {
 
   function init() {
     bindEvents();
+    bindCardPreviewEvents();
     console.log('[Gallery] Initialized.');
   }
 
@@ -35,6 +36,16 @@ const Gallery = (() => {
         if (e.target === modal) closeGallery();
       });
     }
+
+    // Keyboard: Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('gallery-modal');
+        if (modal && modal.style.display !== 'none') {
+          closeGallery();
+        }
+      }
+    });
 
     // Listen for state changes
     document.addEventListener('gateCompleted', () => refreshGallery());
@@ -154,6 +165,101 @@ const Gallery = (() => {
     }
 
     container.innerHTML = html;
+  }
+
+  // Show detail preview for a collected card
+  function showCardPreview(gateId) {
+    const gate = GATES_DATA[gateId];
+    if (!gate) return;
+
+    // Handle sub-card (4b)
+    let character;
+    if (String(gateId).includes('b')) {
+      character = GATES_DATA[4].character2;
+    } else {
+      character = gate.character;
+    }
+    if (!character) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'card-preview-overlay';
+    modal.innerHTML = `
+      <div class="card-preview-content">
+        <button class="card-preview-close">&times;</button>
+        <div class="card-preview-portrait">
+          <img src="${character.image}" alt="${character.name}">
+        </div>
+        <h2 class="card-preview-name">${character.name}</h2>
+        <p class="card-preview-title">${character.title}</p>
+        <p class="card-preview-achievement">${character.achievement}</p>
+        <p class="card-preview-quote">${character.quote}</p>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close on click outside or close button
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.classList.contains('card-preview-close')) {
+        modal.remove();
+      }
+    });
+    document.addEventListener('keydown', function escClose(e) {
+      if (e.key === 'Escape') { modal.remove(); document.removeEventListener('keydown', escClose); }
+    });
+  }
+
+  // Show detail preview for a badge
+  function showBadgePreview(gateId) {
+    const gate = GATES_DATA[gateId];
+    if (!gate) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'card-preview-overlay';
+    modal.innerHTML = `
+      <div class="card-preview-content" style="max-width:320px;">
+        <button class="card-preview-close">&times;</button>
+        <div class="badge-preview-icon">${gate.badge.icon}</div>
+        <h2 class="card-preview-name">${gate.badge.name}</h2>
+        <p class="card-preview-achievement">${gate.badge.description}</p>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.classList.contains('card-preview-close')) {
+        modal.remove();
+      }
+    });
+    document.addEventListener('keydown', function escClose(e) {
+      if (e.key === 'Escape') { modal.remove(); document.removeEventListener('keydown', escClose); }
+    });
+  }
+
+  // Bind click events on gallery cards/badges via event delegation
+  function bindCardPreviewEvents() {
+    const cardGallery = document.getElementById('card-gallery');
+    if (cardGallery) {
+      cardGallery.addEventListener('click', (e) => {
+        const slot = e.target.closest('.card-slot.collected');
+        if (slot) {
+          const cardId = slot.dataset.card;
+          showCardPreview(cardId);
+        }
+      });
+    }
+
+    const badgeGallery = document.getElementById('badge-gallery');
+    if (badgeGallery) {
+      badgeGallery.addEventListener('click', (e) => {
+        const slot = e.target.closest('.badge-slot.earned');
+        if (slot) {
+          const badgeId = slot.dataset.badge;
+          showBadgePreview(badgeId);
+        }
+      });
+    }
   }
 
   return {

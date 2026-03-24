@@ -34,23 +34,23 @@
     <div class="header-content">
       <div class="header-left">
         <h1 class="app-title">
-          <span class="title-icon">⭐</span>
+          <span class="title-icon">🏔️</span>
           Con Đường Điện Biên
         </h1>
         <p class="app-subtitle">Hành Trình Lịch Sử 1954</p>
       </div>
       <div class="header-right">
-        <button class="btn-gallery" id="btn-gallery" title="Bộ sưu tập">
+        <button class="btn-gallery" id="btn-gallery" title="Bộ sưu tập" aria-label="Bộ sưu tập nhân vật">
           <span class="gallery-icon">🃏</span>
           <span class="gallery-label">Bộ Sưu Tập</span>
           <span class="gallery-count" id="gallery-count">0/6</span>
         </button>
-        <button class="btn-badges" id="btn-badges" title="Huy hiệu">
+        <button class="btn-badges" id="btn-badges" title="Huy hiệu" aria-label="Huy hiệu đã thu thập">
           <span class="badges-icon">🏅</span>
           <span class="badges-label">Huy Hiệu</span>
           <span class="badges-count" id="badges-count">0/5</span>
         </button>
-        <button class="btn-mute" id="mute-toggle" title="Tắt âm thanh">🔇</button>
+        <button class="btn-mute" id="mute-toggle" title="Tắt âm thanh" aria-label="Bật/tắt âm thanh">🔇</button>
       </div>
     </div>
     <!-- Progress bar -->
@@ -120,64 +120,64 @@
           <!-- ===== TRAIL PATH (I→V) ===== -->
           <g class="trail-group">
             <!-- Trail shadow -->
-            <path class="trail-shadow" d="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
+            <path class="trail-shadow" d="M 100,140 C 180,200 280,250 350,310 S 490,400 620,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
             <!-- Trail line with marching dots -->
-            <path class="trail-line" id="trail-line" d="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650" filter="url(#glow)"/>
+            <path class="trail-line" id="trail-line" d="M 100,140 C 180,200 280,250 350,310 S 490,400 620,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650" filter="url(#glow)"/>
             <!-- Moving dot along trail -->
             <circle class="trail-dot" r="5">
-              <animateMotion dur="6s" repeatCount="indefinite" path="M 170,140 C 230,200 280,250 350,310 S 480,400 580,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
+              <animateMotion dur="6s" repeatCount="indefinite" path="M 100,140 C 180,200 280,250 350,310 S 490,400 620,430 S 720,470 800,490 S 880,530 920,570 S 950,620 950,650"/>
             </circle>
           </g>
 
           <!-- ===== GATE MARKERS ===== -->
           <!-- Gate I: Ba Đình / Lời Kêu Gọi — top-left inset origin -->
-          <g class="gate-marker-svg" id="gate-svg-1" data-gate="1" transform="translate(170, 140)">
-            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
-            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
-            <circle class="marker-bg" r="18" cx="0" cy="0"/>
-            <text class="marker-number" x="0" y="6" text-anchor="middle">I</text>
-            <text class="marker-label" x="0" y="38" text-anchor="middle">Lời Kêu Gọi</text>
-            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Quảng trường Ba Đình</text>
+          <g class="gate-marker-svg" id="gate-svg-1" data-gate="1" transform="translate(100, 140)" tabindex="0" role="button" aria-label="Cổng 1: Lời Kêu Gọi — Quảng trường Ba Đình">
+            <circle class="marker-pulse" r="38" cx="0" cy="0"/>
+            <circle class="marker-glow" r="28" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="24" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="8" text-anchor="middle">📢</text>
+            <text class="marker-label" x="0" y="44" text-anchor="middle">Lời Kêu Gọi</text>
+            <text class="marker-sublabel" x="0" y="58" text-anchor="middle">Quảng trường Ba Đình</text>
           </g>
 
           <!-- Gate II: Tuần Giáo supply trail — upper-left mountain pass -->
-          <g class="gate-marker-svg" id="gate-svg-2" data-gate="2" transform="translate(350, 310)">
-            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
-            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
-            <circle class="marker-bg" r="18" cx="0" cy="0"/>
-            <text class="marker-number" x="0" y="6" text-anchor="middle">II</text>
-            <text class="marker-label" x="0" y="38" text-anchor="middle">Cuộc Hành Quân</text>
-            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Tuần Giáo → ĐBP</text>
+          <g class="gate-marker-svg" id="gate-svg-2" data-gate="2" transform="translate(350, 310)" tabindex="0" role="button" aria-label="Cổng 2: Cuộc Hành Quân — Tuần Giáo đến Điện Biên Phủ">
+            <circle class="marker-pulse" r="38" cx="0" cy="0"/>
+            <circle class="marker-glow" r="28" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="24" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="8" text-anchor="middle">🚲</text>
+            <text class="marker-label" x="0" y="44" text-anchor="middle">Cuộc Hành Quân</text>
+            <text class="marker-sublabel" x="0" y="58" text-anchor="middle">Tuần Giáo → ĐBP</text>
           </g>
 
           <!-- Gate III: Mường Thanh valley center — trench network -->
-          <g class="gate-marker-svg" id="gate-svg-3" data-gate="3" transform="translate(580, 430)">
-            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
-            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
-            <circle class="marker-bg" r="18" cx="0" cy="0"/>
-            <text class="marker-number" x="0" y="6" text-anchor="middle">III</text>
-            <text class="marker-label" x="0" y="38" text-anchor="middle">Đào Chiến Hào</text>
-            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Thung lũng Mường Thanh</text>
+          <g class="gate-marker-svg" id="gate-svg-3" data-gate="3" transform="translate(620, 430)" tabindex="0" role="button" aria-label="Cổng 3: Đào Chiến Hào — Thung lũng Mường Thanh">
+            <circle class="marker-pulse" r="38" cx="0" cy="0"/>
+            <circle class="marker-glow" r="28" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="24" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="8" text-anchor="middle">⛏️</text>
+            <text class="marker-label" x="0" y="44" text-anchor="middle">Đào Chiến Hào</text>
+            <text class="marker-sublabel" x="0" y="58" text-anchor="middle">Thung lũng Mường Thanh</text>
           </g>
 
           <!-- Gate IV: Him Lam + A1 — east hills -->
-          <g class="gate-marker-svg" id="gate-svg-4" data-gate="4" transform="translate(800, 490)">
-            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
-            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
-            <circle class="marker-bg" r="18" cx="0" cy="0"/>
-            <text class="marker-number" x="0" y="6" text-anchor="middle">IV</text>
-            <text class="marker-label" x="0" y="38" text-anchor="middle">56 Ngày Đêm</text>
-            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Him Lam · Đồi A1</text>
+          <g class="gate-marker-svg" id="gate-svg-4" data-gate="4" transform="translate(800, 490)" tabindex="0" role="button" aria-label="Cổng 4: 56 Ngày Đêm — Him Lam và Đồi A1">
+            <circle class="marker-pulse" r="38" cx="0" cy="0"/>
+            <circle class="marker-glow" r="28" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="24" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="8" text-anchor="middle">⚔️</text>
+            <text class="marker-label" x="0" y="44" text-anchor="middle">56 Ngày Đêm</text>
+            <text class="marker-sublabel" x="0" y="58" text-anchor="middle">Him Lam · Đồi A1</text>
           </g>
 
           <!-- Gate V: De Castries bunker — center-south command -->
-          <g class="gate-marker-svg" id="gate-svg-5" data-gate="5" transform="translate(950, 650)">
-            <circle class="marker-pulse" r="30" cx="0" cy="0"/>
-            <circle class="marker-glow" r="22" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
-            <circle class="marker-bg" r="18" cx="0" cy="0"/>
-            <text class="marker-number" x="0" y="6" text-anchor="middle">V</text>
-            <text class="marker-label" x="0" y="38" text-anchor="middle">Chiến Thắng</text>
-            <text class="marker-sublabel" x="0" y="52" text-anchor="middle">Hầm De Castries</text>
+          <g class="gate-marker-svg" id="gate-svg-5" data-gate="5" transform="translate(950, 650)" tabindex="0" role="button" aria-label="Cổng 5: Chiến Thắng — Hầm De Castries">
+            <circle class="marker-pulse" r="38" cx="0" cy="0"/>
+            <circle class="marker-glow" r="28" cx="0" cy="0" fill="url(#marker-glow-gradient)"/>
+            <circle class="marker-bg" r="24" cx="0" cy="0"/>
+            <text class="marker-number" x="0" y="8" text-anchor="middle">🚩</text>
+            <text class="marker-label" x="0" y="44" text-anchor="middle">Chiến Thắng</text>
+            <text class="marker-sublabel" x="0" y="58" text-anchor="middle">Hầm De Castries</text>
           </g>
 
           <!-- ===== DECORATIVE ELEMENTS ===== -->
@@ -244,7 +244,7 @@
   </div>
 
   <!-- ===== GALLERY MODAL ===== -->
-  <div class="modal-overlay" id="gallery-modal" style="display: none;">
+  <div class="modal-overlay" id="gallery-modal" style="display: none;" role="dialog" aria-modal="true" aria-label="Bộ sưu tập nhân vật và huy hiệu">
     <div class="modal-content gallery-content">
       <button class="modal-close" id="gallery-close">&times;</button>
       <h2 class="modal-title">🃏 Bộ Sưu Tập Nhân Vật</h2>
@@ -304,31 +304,24 @@
       document.getElementById('gate-view').style.display = 'none';
       document.querySelector('.app-footer').style.display = 'none';
 
-      screen.style.display = 'flex';
-      screen.style.flexDirection = 'column';
-      screen.style.alignItems = 'center';
-      screen.style.justifyContent = 'center';
-      screen.style.minHeight = 'calc(100vh - 80px)';
-      screen.style.padding = '2rem';
-      screen.style.textAlign = 'center';
-      screen.style.background = 'linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 50%, var(--parchment-dark) 100%)';
-      screen.style.animation = 'fadeIn 0.5s ease';
+      screen.style.display = '';
+      screen.className = 'completion-screen';
 
       // Build all cards HTML
       let cardsHtml = '';
       for (let i = 1; i <= 5; i++) {
         const gate = GATES_DATA[i];
         cardsHtml += `
-          <div style="text-align:center;">
-            <img src="${gate.character.image}" alt="${gate.character.name}" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--gold); object-fit:cover;">
-            <div style="font-size:0.7rem; font-weight:700; margin-top:4px; color:var(--earth-dark);">${gate.character.name}</div>
+          <div class="completion-card-item">
+            <img src="${gate.character.image}" alt="${gate.character.name}">
+            <div class="completion-card-name">${gate.character.name}</div>
           </div>
         `;
         if (i === 4 && gate.character2) {
           cardsHtml += `
-            <div style="text-align:center;">
-              <img src="${gate.character2.image}" alt="${gate.character2.name}" style="width:80px; height:80px; border-radius:50%; border:3px solid var(--gold); object-fit:cover;">
-              <div style="font-size:0.7rem; font-weight:700; margin-top:4px; color:var(--earth-dark);">${gate.character2.name}</div>
+            <div class="completion-card-item">
+              <img src="${gate.character2.image}" alt="${gate.character2.name}">
+              <div class="completion-card-name">${gate.character2.name}</div>
             </div>
           `;
         }
@@ -339,66 +332,60 @@
       for (let i = 1; i <= 5; i++) {
         const gate = GATES_DATA[i];
         badgesHtml += `
-          <div style="text-align:center;">
-            <div style="font-size:2rem;">${gate.badge.icon}</div>
-            <div style="font-size:0.65rem; font-weight:700; color:var(--gold-dark);">${gate.badge.name}</div>
+          <div class="completion-badge-item">
+            <div class="completion-badge-icon">${gate.badge.icon}</div>
+            <div class="completion-badge-name">${gate.badge.name}</div>
           </div>
         `;
       }
 
       screen.innerHTML = `
-        <div style="font-size:4rem; margin-bottom:1rem;">🎉🇻🇳🎉</div>
-        <h1 style="font-family:var(--font-display); color:var(--accent-red); font-size:clamp(1.8rem,5vw,2.8rem); margin-bottom:0.5rem;">
-          Hoàn Thành Xuất Sắc!
-        </h1>
-        <p style="font-family:var(--font-accent); color:var(--earth-medium); font-size:1.1rem; margin-bottom:2rem; max-width:600px;">
+        <div class="completion-hero-emoji">🎉🇻🇳🎉</div>
+        <h1 class="completion-title">Hoàn Thành Xuất Sắc!</h1>
+        <p class="completion-description">
           Bạn đã đi qua toàn bộ <strong>Con Đường Điện Biên</strong> — từ lời kêu gọi kháng chiến đến chiến thắng lịch sử "lừng lẫy năm châu, chấn động địa cầu."
         </p>
 
-        <div style="display:flex; gap:2rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
-          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.completedGates}/${progress.totalGates}</div>
-            <div style="font-size:0.8rem; color:var(--earth-medium);">Cổng hoàn thành</div>
+        <div class="completion-stats">
+          <div class="completion-stat-card">
+            <div class="completion-stat-value">${progress.completedGates}/${progress.totalGates}</div>
+            <div class="completion-stat-label">Cổng hoàn thành</div>
           </div>
-          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.totalCards}/${progress.maxCards}</div>
-            <div style="font-size:0.8rem; color:var(--earth-medium);">Thẻ nhân vật</div>
+          <div class="completion-stat-card">
+            <div class="completion-stat-value">${progress.totalCards}/${progress.maxCards}</div>
+            <div class="completion-stat-label">Thẻ nhân vật</div>
           </div>
-          <div style="background:var(--glass-bg); border:2px solid var(--gold); border-radius:16px; padding:1rem 2rem; text-align:center;">
-            <div style="font-size:2rem; font-weight:900; color:var(--accent-red);">${progress.totalBadges}/${progress.maxBadges}</div>
-            <div style="font-size:0.8rem; color:var(--earth-medium);">Huy hiệu</div>
+          <div class="completion-stat-card">
+            <div class="completion-stat-value">${progress.totalBadges}/${progress.maxBadges}</div>
+            <div class="completion-stat-label">Huy hiệu</div>
           </div>
         </div>
 
-        <h3 style="font-family:var(--font-display); color:var(--gold-dark); margin-bottom:1rem;">🃏 Bộ Sưu Tập Nhân Vật</h3>
-        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
-          ${cardsHtml}
-        </div>
+        <h3 class="completion-section-title">🃏 Bộ Sưu Tập Nhân Vật</h3>
+        <div class="completion-collection">${cardsHtml}</div>
 
-        <h3 style="font-family:var(--font-display); color:var(--gold-dark); margin-bottom:1rem;">🏅 Huy Hiệu</h3>
-        <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
-          ${badgesHtml}
-        </div>
+        <h3 class="completion-section-title">🏅 Huy Hiệu</h3>
+        <div class="completion-badges">${badgesHtml}</div>
 
-        <div style="border-top:2px solid var(--khaki); padding-top:1.5rem; margin-top:1rem;">
-          <p style="font-family:var(--font-accent); font-style:italic; color:var(--earth-medium); max-width:500px; margin:0 auto 1.5rem;">
+        <div class="completion-quote-area">
+          <p class="completion-quote">
             "Chiến thắng Điện Biên Phủ mãi mãi đi vào lịch sử dân tộc Việt Nam như một trong những chiến thắng vĩ đại nhất."
           </p>
-          <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+          <div class="completion-actions">
             <button class="btn-primary" onclick="GameEngine.resetProgress(); location.reload();">🔄 Khám phá lại</button>
             <button class="btn-secondary" onclick="Gallery.openGallery();">🃏 Xem bộ sưu tập</button>
           </div>
         </div>
 
-        <p style="margin-top:2rem; font-size:0.75rem; color:var(--khaki);">
+        <p class="completion-credit">
           Dựa trên tác phẩm "Kể chuyện Điện Biên Phủ" — NXB Kim Đồng<br>
           Cuộc thi "Cùng AI kể chuyện" · Ngày Sách và Văn hóa đọc 2026
         </p>
       `;
 
-      // Trigger confetti
-      if (typeof BadgeReveal !== 'undefined') {
-        BadgeReveal.render(document.createElement('div'), { icon: '🏆', name: '', description: '' });
+      // Trigger confetti celebration
+      if (typeof Effects !== 'undefined' && typeof Effects.confetti === 'function') {
+        Effects.confetti();
       }
     }
   </script>
